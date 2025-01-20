@@ -1,0 +1,389 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						11
+					],
+					"jsonFile" : "directory-.-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12
+					]
+				},
+				{
+					"build" : "C/Controller",
+					"jsonFile" : "directory-C.Controller-aaf8978ddf6667def35e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "C/Controller",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "Cpp/Controller",
+					"jsonFile" : "directory-Cpp.Controller-ddfb7a58575673ebaf34.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "Cpp/Controller",
+					"targetIndexes" : 
+					[
+						13
+					]
+				},
+				{
+					"build" : "C/Server",
+					"jsonFile" : "directory-C.Server-c86d704e50bc2e5162e1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "C/Server",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "Cpp/Server",
+					"jsonFile" : "directory-Cpp.Server-ffa0e4788afab1f86072.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "Cpp/Server",
+					"targetIndexes" : 
+					[
+						15
+					]
+				},
+				{
+					"build" : "C/DataHandler",
+					"jsonFile" : "directory-C.DataHandler-2693c018735f99a35e49.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "C/DataHandler",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "Cpp/DataHandler",
+					"jsonFile" : "directory-Cpp.DataHandler-0321fa567512a24c2d22.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "Cpp/DataHandler",
+					"targetIndexes" : 
+					[
+						14
+					]
+				},
+				{
+					"build" : "C/Common",
+					"childIndexes" : 
+					[
+						8,
+						10
+					],
+					"jsonFile" : "directory-C.Common-14b7c60c67beeea6def0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "C/Common"
+				},
+				{
+					"build" : "C/Common/Third-party",
+					"childIndexes" : 
+					[
+						9
+					],
+					"jsonFile" : "directory-C.Common.Third-party-f7fdef9749b8f1d6a17d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 7,
+					"projectIndex" : 0,
+					"source" : "C/Common/Third-party"
+				},
+				{
+					"build" : "C/Common/Third-party/Ini",
+					"jsonFile" : "directory-C.Common.Third-party.Ini-1632b8714345c07e5ca3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 8,
+					"projectIndex" : 0,
+					"source" : "C/Common/Third-party/Ini",
+					"targetIndexes" : 
+					[
+						16
+					]
+				},
+				{
+					"build" : "C/Common/Logger",
+					"jsonFile" : "directory-C.Common.Logger-4f546e23c38dca3407ca.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 7,
+					"projectIndex" : 0,
+					"source" : "C/Common/Logger",
+					"targetIndexes" : 
+					[
+						17
+					]
+				},
+				{
+					"build" : "Cpp/Common",
+					"jsonFile" : "directory-Cpp.Common-97eee1b0dd64e9e7dd40.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.25.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "Cpp/Common"
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					],
+					"name" : "Inflatiometer",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "CController::@e2f0f5a610729772ad6d",
+					"jsonFile" : "target-CController-95a675aa82ec73681177.json",
+					"name" : "CController",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "CDataHandler::@dad601222491b615eb01",
+					"jsonFile" : "target-CDataHandler-13088cc9b7656996c7fb.json",
+					"name" : "CDataHandler",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "CServer::@6a59aa29429c89eeab04",
+					"jsonFile" : "target-CServer-356f44db1372a4a7dc8e.json",
+					"name" : "CServer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CleanOutputDir::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CleanOutputDir-ea69739a25bda007e778.json",
+					"name" : "CleanOutputDir",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CopyCController::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CopyCController-7992680a106757319f8e.json",
+					"name" : "CopyCController",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CopyCDataHandler::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CopyCDataHandler-28d083eff5a9f1ef4f50.json",
+					"name" : "CopyCDataHandler",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CopyCServer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CopyCServer-96cb1d7d8bf04396f140.json",
+					"name" : "CopyCServer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CopyConfigs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CopyConfigs-cabbba6d475659fee7dd.json",
+					"name" : "CopyConfigs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CopyCppController::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CopyCppController-82303d0946547051337c.json",
+					"name" : "CopyCppController",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CopyCppDataHandler::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CopyCppDataHandler-60de66078916ba467911.json",
+					"name" : "CopyCppDataHandler",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CopyCppServer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CopyCppServer-4e9e8b8a3e410e6aa18f.json",
+					"name" : "CopyCppServer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CopyPython::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CopyPython-0a0f1ddbf27d3b96ac03.json",
+					"name" : "CopyPython",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "CopyResources::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CopyResources-20bef2968d3c9ab43150.json",
+					"name" : "CopyResources",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "CppController::@db7b350c7c3ff09621f6",
+					"jsonFile" : "target-CppController-03f0553d952d1661c813.json",
+					"name" : "CppController",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "CppDataHandler::@b3a7466ffdafa8ba6ece",
+					"jsonFile" : "target-CppDataHandler-e02aafe74e75e6e81b9c.json",
+					"name" : "CppDataHandler",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "CppServer::@34cc8e509b0ce88113f7",
+					"jsonFile" : "target-CppServer-4205b3882745175af253.json",
+					"name" : "CppServer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "Ini::@06019b0d188480483885",
+					"jsonFile" : "target-Ini-c3d0c3bb1bb4688f1033.json",
+					"name" : "Ini",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 10,
+					"id" : "Logger::@5042a0f12aa4191ecd54",
+					"jsonFile" : "target-Logger-bd1922c0ffca01c20ed1.json",
+					"name" : "Logger",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/vlad/Inflatiometer/build",
+		"source" : "/home/vlad/Inflatiometer/Source"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

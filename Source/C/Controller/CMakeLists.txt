@@ -1,0 +1,24 @@
+# Таргет с контроллером. Контроллер - самый главный тут. 
+# Запускает и управляет всеми процессами.
+set (THIS_TARGET "CController")
+
+set (SOURCE_FILES 
+  "Controller.c"
+  "Impl/IniParser.c"
+)
+set (HEADER_FILES "")
+
+add_executable(${THIS_TARGET} ${SOURCE_FILES} ${HEADER_FILES})
+
+target_link_libraries(${THIS_TARGET} 
+  Ini
+  Logger
+) 
+
+target_include_directories(${THIS_TARGET} PRIVATE 
+  "${CMAKE_SOURCE_DIR}/C"
+)
+
+target_compile_definitions(${THIS_TARGET} PRIVATE 
+  MY_NAME="${THIS_TARGET}"
+)

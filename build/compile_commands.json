@@ -1,0 +1,47 @@
+[
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/local/bin/gcc -DDEBUG -DMY_NAME=\\\"CController\\\" -I/home/vlad/Inflatiometer/Source/C -g -std=c2x -o C/Controller/CMakeFiles/CController.dir/Controller.c.o -c /home/vlad/Inflatiometer/Source/C/Controller/Controller.c",
+  "file": "/home/vlad/Inflatiometer/Source/C/Controller/Controller.c"
+},
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/bin/clang++-19 -DDEBUG -g -std=c++2b -o Cpp/Controller/CMakeFiles/CppController.dir/Controller.cpp.o -c /home/vlad/Inflatiometer/Source/Cpp/Controller/Controller.cpp",
+  "file": "/home/vlad/Inflatiometer/Source/Cpp/Controller/Controller.cpp"
+},
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/local/bin/gcc -DDEBUG -g -std=c2x -o C/Server/CMakeFiles/CServer.dir/Server.c.o -c /home/vlad/Inflatiometer/Source/C/Server/Server.c",
+  "file": "/home/vlad/Inflatiometer/Source/C/Server/Server.c"
+},
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/bin/clang++-19 -DDEBUG -g -std=c++2b -o Cpp/Server/CMakeFiles/CppServer.dir/Server.cpp.o -c /home/vlad/Inflatiometer/Source/Cpp/Server/Server.cpp",
+  "file": "/home/vlad/Inflatiometer/Source/Cpp/Server/Server.cpp"
+},
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/local/bin/gcc -DDEBUG -g -std=c2x -o C/DataHandler/CMakeFiles/CDataHandler.dir/DataHandler.c.o -c /home/vlad/Inflatiometer/Source/C/DataHandler/DataHandler.c",
+  "file": "/home/vlad/Inflatiometer/Source/C/DataHandler/DataHandler.c"
+},
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/bin/clang++-19 -DDEBUG -g -std=c++2b -o Cpp/DataHandler/CMakeFiles/CppDataHandler.dir/DataHandler.cpp.o -c /home/vlad/Inflatiometer/Source/Cpp/DataHandler/DataHandler.cpp",
+  "file": "/home/vlad/Inflatiometer/Source/Cpp/DataHandler/DataHandler.cpp"
+},
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/local/bin/gcc -DDEBUG -g -std=c2x -o C/Common/Third-party/Ini/CMakeFiles/Ini.dir/ini.c.o -c /home/vlad/Inflatiometer/Source/C/Common/Third-party/Ini/ini.c",
+  "file": "/home/vlad/Inflatiometer/Source/C/Common/Third-party/Ini/ini.c"
+},
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/local/bin/gcc -DDEBUG -I/home/vlad/Inflatiometer/Source/C -g -std=c2x -o C/Common/Logger/CMakeFiles/Logger.dir/Impl/Logger.c.o -c /home/vlad/Inflatiometer/Source/C/Common/Logger/Impl/Logger.c",
+  "file": "/home/vlad/Inflatiometer/Source/C/Common/Logger/Impl/Logger.c"
+},
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/local/bin/gcc -DDEBUG -I/home/vlad/Inflatiometer/Source/C -g -std=c2x -o C/Common/Logger/CMakeFiles/Logger.dir/Impl/IniParser.c.o -c /home/vlad/Inflatiometer/Source/C/Common/Logger/Impl/IniParser.c",
+  "file": "/home/vlad/Inflatiometer/Source/C/Common/Logger/Impl/IniParser.c"
+}
+]

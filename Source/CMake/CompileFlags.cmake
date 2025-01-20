@@ -1,0 +1,5 @@
+set(COMMON_COMPILE_FLAGS "-Wall -Wextra")
+
+set(C_COMPILE_FLAGS "")
+
+set(CXX_COMPILE_FLAGS "")

@@ -1,0 +1,59 @@
+{
+    "url": "https://magnit.ru/webgate/v2/goods/search",
+    "raw_url": "https://magnit.ru/webgate/v2/goods/search",
+    "method": "post",
+    "cookies": {
+        "oxxfgh": "7fa68bf1-2912-41f4-8071-608af180e891#0#7884000000#5000#1800000#12840",
+        "KFP_DID": "edcb8abc-a6f0-4551-8468-458df5b4de87",
+        "_ym_uid": "1736606910957992122",
+        "_ym_d": "1736606910",
+        "_ym_isad": "2",
+        "_ym_visorc": "b",
+        "mg_udi": "708FC5A0-7871-9A80-E860-1B4A4853AC4E",
+        "nmg_udi": "708FC5A0-7871-9A80-E860-1B4A4853AC4E",
+        "x_device_id": "708FC5A0-7871-9A80-E860-1B4A4853AC4E",
+        "shopCode": "992301",
+        "x_shop_type": "ME"
+    },
+    "headers": {
+        "Accept-Language": "ru,en;q=0.9",
+        "Cache-Control": "no-cache",
+        "Connection": "keep-alive",
+        "Cookie": "oxxfgh=7fa68bf1-2912-41f4-8071-608af180e891#0#7884000000#5000#1800000#12840; KFP_DID=edcb8abc-a6f0-4551-8468-458df5b4de87; _ym_uid=1736606910957992122; _ym_d=1736606910; _ym_isad=2; _ym_visorc=b; mg_udi=708FC5A0-7871-9A80-E860-1B4A4853AC4E; nmg_udi=708FC5A0-7871-9A80-E860-1B4A4853AC4E; x_device_id=708FC5A0-7871-9A80-E860-1B4A4853AC4E; shopCode=992301; x_shop_type=ME",
+        "Origin": "https://magnit.ru",
+        "Pragma": "no-cache",
+        "Referer": "https://magnit.ru/",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 YaBrowser/24.12.0.0 Safari/537.36",
+        "accept": "application/json",
+        "content-type": "application/json",
+        "sec-ch-ua": "\"Chromium\";v=\"130\", \"YaBrowser\";v=\"24.12\", \"Not?A_Brand\";v=\"99\", \"Yowser\";v=\"2.5\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "x-app-version": "7.0.0",
+        "x-client-name": "magnit",
+        "x-device-id": "708FC5A0-7871-9A80-E860-1B4A4853AC4E",
+        "x-device-platform": "Web",
+        "x-device-tag": "disabled",
+        "x-new-magnit": "true",
+        "x-platform-version": "Windows Chrome 130"
+    },
+    "data": {
+        "sort": {
+            "order": "desc",
+            "type": "price"
+        },
+        "pagination": {
+            "limit": 25,
+            "offset": 0
+        },
+        "categories": [
+        ],
+        "includeAdultGoods": true,
+        "storeCode": "992301",
+        "storeType": "6",
+        "catalogType": "1"
+    }
+}

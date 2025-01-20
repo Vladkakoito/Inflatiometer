@@ -1,0 +1,7 @@
+{
+  "cmake.sourceDirectory": "/home/vlad/Inflatiometer/Source",
+  "files.associations": {
+    "ini.h": "c",
+    "stdlib.h": "c"
+  }
+}

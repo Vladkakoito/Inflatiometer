@@ -1,0 +1,93 @@
+{
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 55,
+				"parent" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "CController::@e2f0f5a610729772ad6d"
+		},
+		{
+			"id" : "CppController::@db7b350c7c3ff09621f6"
+		},
+		{
+			"id" : "CServer::@6a59aa29429c89eeab04"
+		},
+		{
+			"id" : "CppServer::@34cc8e509b0ce88113f7"
+		},
+		{
+			"id" : "CDataHandler::@dad601222491b615eb01"
+		},
+		{
+			"id" : "CppDataHandler::@b3a7466ffdafa8ba6ece"
+		},
+		{
+			"id" : "Ini::@06019b0d188480483885"
+		},
+		{
+			"id" : "Logger::@5042a0f12aa4191ecd54"
+		}
+	],
+	"id" : "CleanOutputDir::@6890427a1f51a3e7e1df",
+	"name" : "CleanOutputDir",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "/home/vlad/Inflatiometer/build/CMakeFiles/CleanOutputDir",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "/home/vlad/Inflatiometer/build/CMakeFiles/CleanOutputDir.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}
