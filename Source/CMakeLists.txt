@@ -88,6 +88,11 @@ foreach(DIR IN LISTS COPY_FROM)
   )
 endforeach()
 
+# Добавление корневой директории всем. что бы инклудить через <>
+foreach(TARGET IN LISTS ALL_TARGETS)
+  target_include_directories(${TARGET} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+endforeach()
+
 # Копирование всех таргетов в выходной каталог
 foreach(TARGET IN LISTS ALL_TARGETS)
   get_target_property(TARGET_TYPE ${TARGET} TYPE)

@@ -4,6 +4,7 @@ set (THIS_TARGET "CController")
 
 set (SOURCE_FILES 
   "Controller.c"
+  "Impl/DoProcess.c"
   "Impl/IniParser.c"
 )
 set (HEADER_FILES "")

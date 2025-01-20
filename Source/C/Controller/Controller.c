@@ -1,3 +1,4 @@
+#include <Controller/Impl/DoProcess.h>
 #include "Controller/Impl/IniParser.h"
 #include <Common/Logger/Logger.h>
 #include <Common/Settings.h>
@@ -41,6 +42,11 @@ int main () {
   ParseIniFile(&settings, iniFile);
   fclose(iniFile);
   PrintConfiguration(&settings);
+
+  // это временно, потом прикрутится расписание или вызов по команде. из майна уедет
+  int ret = DoProcess();
+  if (ret < 0)
+    return ret;
 
   return 0;
 }
