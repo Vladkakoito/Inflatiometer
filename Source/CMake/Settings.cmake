@@ -19,8 +19,8 @@ set(DATA_HANDLER "C/DataHandler" "Cpp/DataHandler")
 set(SOURCES_DIRS ${CONTROLLER} ${SERVER} ${DATA_HANDLER})
 
 # Компиляторы
-set(CMAKE_C_COMPILER "/usr/local/bin/gcc")
-set(CMAKE_CXX_COMPILER "/usr/bin/clang++-19")
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "clang++")
 
 # Стандарты
 set(CMAKE_C_STANDARD 23)

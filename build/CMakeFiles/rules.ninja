@@ -44,7 +44,7 @@ rule C_EXECUTABLE_LINKER__CController_
 rule CXX_COMPILER__CppController_
   depfile = $DEP_FILE
   deps = gcc
-  command = /usr/bin/clang++-19 $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = /usr/local/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building CXX object $out
 
 
@@ -52,7 +52,7 @@ rule CXX_COMPILER__CppController_
 # Rule for linking CXX executable.
 
 rule CXX_EXECUTABLE_LINKER__CppController_
-  command = $PRE_LINK && /usr/bin/clang++-19 $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  command = $PRE_LINK && /usr/local/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
 
@@ -82,7 +82,7 @@ rule C_EXECUTABLE_LINKER__CServer_
 rule CXX_COMPILER__CppServer_
   depfile = $DEP_FILE
   deps = gcc
-  command = /usr/bin/clang++-19 $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = /usr/local/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building CXX object $out
 
 
@@ -90,7 +90,7 @@ rule CXX_COMPILER__CppServer_
 # Rule for linking CXX executable.
 
 rule CXX_EXECUTABLE_LINKER__CppServer_
-  command = $PRE_LINK && /usr/bin/clang++-19 $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  command = $PRE_LINK && /usr/local/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
 
@@ -120,7 +120,7 @@ rule C_EXECUTABLE_LINKER__CDataHandler_
 rule CXX_COMPILER__CppDataHandler_
   depfile = $DEP_FILE
   deps = gcc
-  command = /usr/bin/clang++-19 $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = /usr/local/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building CXX object $out
 
 
@@ -128,7 +128,7 @@ rule CXX_COMPILER__CppDataHandler_
 # Rule for linking CXX executable.
 
 rule CXX_EXECUTABLE_LINKER__CppDataHandler_
-  command = $PRE_LINK && /usr/bin/clang++-19 $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  command = $PRE_LINK && /usr/local/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
 

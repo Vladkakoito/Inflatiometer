@@ -6,7 +6,12 @@
 },
 {
   "directory": "/home/vlad/Inflatiometer/build",
-  "command": "/usr/bin/clang++-19 -DDEBUG -g -std=c++2b -o Cpp/Controller/CMakeFiles/CppController.dir/Controller.cpp.o -c /home/vlad/Inflatiometer/Source/Cpp/Controller/Controller.cpp",
+  "command": "/usr/local/bin/gcc -DDEBUG -DMY_NAME=\\\"CController\\\" -I/home/vlad/Inflatiometer/Source/C -g -std=c2x -o C/Controller/CMakeFiles/CController.dir/Impl/IniParser.c.o -c /home/vlad/Inflatiometer/Source/C/Controller/Impl/IniParser.c",
+  "file": "/home/vlad/Inflatiometer/Source/C/Controller/Impl/IniParser.c"
+},
+{
+  "directory": "/home/vlad/Inflatiometer/build",
+  "command": "/usr/local/bin/clang++ -DDEBUG -g -std=c++2b -o Cpp/Controller/CMakeFiles/CppController.dir/Controller.cpp.o -c /home/vlad/Inflatiometer/Source/Cpp/Controller/Controller.cpp",
   "file": "/home/vlad/Inflatiometer/Source/Cpp/Controller/Controller.cpp"
 },
 {
@@ -16,7 +21,7 @@
 },
 {
   "directory": "/home/vlad/Inflatiometer/build",
-  "command": "/usr/bin/clang++-19 -DDEBUG -g -std=c++2b -o Cpp/Server/CMakeFiles/CppServer.dir/Server.cpp.o -c /home/vlad/Inflatiometer/Source/Cpp/Server/Server.cpp",
+  "command": "/usr/local/bin/clang++ -DDEBUG -g -std=c++2b -o Cpp/Server/CMakeFiles/CppServer.dir/Server.cpp.o -c /home/vlad/Inflatiometer/Source/Cpp/Server/Server.cpp",
   "file": "/home/vlad/Inflatiometer/Source/Cpp/Server/Server.cpp"
 },
 {
@@ -26,7 +31,7 @@
 },
 {
   "directory": "/home/vlad/Inflatiometer/build",
-  "command": "/usr/bin/clang++-19 -DDEBUG -g -std=c++2b -o Cpp/DataHandler/CMakeFiles/CppDataHandler.dir/DataHandler.cpp.o -c /home/vlad/Inflatiometer/Source/Cpp/DataHandler/DataHandler.cpp",
+  "command": "/usr/local/bin/clang++ -DDEBUG -g -std=c++2b -o Cpp/DataHandler/CMakeFiles/CppDataHandler.dir/DataHandler.cpp.o -c /home/vlad/Inflatiometer/Source/Cpp/DataHandler/DataHandler.cpp",
   "file": "/home/vlad/Inflatiometer/Source/Cpp/DataHandler/DataHandler.cpp"
 },
 {
