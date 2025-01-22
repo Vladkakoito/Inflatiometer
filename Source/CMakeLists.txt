@@ -86,7 +86,7 @@ foreach(DIR IN LISTS COPY_FROM)
     COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_PROJECT_DIR}/${DIR}" "${COPY_TO}"
     DEPENDS CleanOutputDir
   )
-endforeach()
+endforeach() 
 
 # Добавление корневой директории всем. что бы инклудить через <>
 foreach(TARGET IN LISTS ALL_TARGETS)

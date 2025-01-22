@@ -1,3 +1,4 @@
 #pragma once
 
-#define TODO(msg) _Pragma(#msg)
+#define PRAGMA_MESSAGE(x) _Pragma(#x)
+#define TODO(msg) PRAGMA_MESSAGE(message ("TODO: " #msg))

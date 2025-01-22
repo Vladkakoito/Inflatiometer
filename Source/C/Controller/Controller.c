@@ -34,18 +34,19 @@ int main () {
     return 1;
   }
   LOG("Логгер инициализирован");
-
+  
+  struct TSettings settings;
   if (!iniFile)
     LOG("ВНИМАНИЕ, конфигурационный файл (%s) не прочитан."
         " используются настройки по-умолчанию", kIniFile);
-
-  struct TSettings settings;
-  ParseIniFile(&settings, iniFile);
-  fclose(iniFile);
+  else {
+    ParseIniFile(&settings, iniFile);
+    fclose(iniFile);
+  }
   PrintConfiguration(&settings);
 
-  TODO(message("Унести из майна. Сделать запуск по расписанию/команде"));
-  TODO("Добавить возможность запуска нескольких процессов одного типа");
+  TODO(Унести из майна. Сделать запуск по расписанию/команде)
+  TODO(Добавить возможность запуска нескольких процессов одного типа)
   struct TProcessesToRun processes;
   processes.parser = settings.parsers.stores[0];
   processes.dataHandler = settings.dataHandlers.names[0];

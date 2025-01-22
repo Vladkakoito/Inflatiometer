@@ -21,7 +21,7 @@ int LoggerInit(FILE * iniFile) {
   memset(settings.logFileName, '\0', MAX_FILENAME);
   memset(settings.errFileName, '\0', MAX_FILENAME);
 
-  if (ParseIniFileSection(&settings, iniFile) < 0)
+  if (!iniFile || ParseIniFileSection(&settings, iniFile) < 0)
     return 0;
 
   if (settings.logFileName[0] != '\0')
@@ -55,10 +55,10 @@ void WriteLog(const char *msg, ...) {
   char buffer[MAX_MESSAGE_LENGTH];
   va_list args;
   va_start(args, msg);
-  if (snprintf(buffer, MAX_MESSAGE_LENGTH, msg, args) <= 0)
-    msg = "LOG ERROR";
+  if (vsnprintf(buffer, MAX_MESSAGE_LENGTH, msg, args) <= 0)
+    strcpy(buffer, "LOG ERROR");
   va_end(args);
-  Print(msg, g_logStream, nullptr, 0);
+  Print(buffer, g_logStream, nullptr, 0);
 }
 
 void WriteDbg(int level, const char *msg, ...) {
@@ -68,14 +68,14 @@ void WriteDbg(int level, const char *msg, ...) {
   char buffer[MAX_MESSAGE_LENGTH];
   va_list args;
   va_start(args, msg);
-  if (snprintf(buffer, MAX_MESSAGE_LENGTH, msg, args) <= 0)
-    msg = "LOG ERROR";
+  if (vsnprintf(buffer, MAX_MESSAGE_LENGTH, msg, args) <= 0)
+    strcpy(buffer, "LOG ERROR");
   va_end(args);
 
   if (g_addFileLine)
-    Print(msg, g_errStream, __FILE_NAME__, __LINE__);
+    Print(buffer, g_errStream, __FILE_NAME__, __LINE__);
   else 
-    Print(msg, g_errStream, nullptr, 0);
+    Print(buffer, g_errStream, nullptr, 0);
 }
 
 void PrintInfo() {

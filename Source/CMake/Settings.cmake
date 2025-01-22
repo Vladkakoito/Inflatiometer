@@ -18,7 +18,7 @@ set(SERVER "C/Server" "Cpp/Server")
 set(DATA_HANDLER "C/DataHandler" "Cpp/DataHandler")
 set(SOURCES_DIRS ${CONTROLLER} ${SERVER} ${DATA_HANDLER})
 
-# Компиляторы
+# Компиляторы. При изменении компиляторов, возможно, нужно подкорректировать флаги компиляции.
 set(CMAKE_C_COMPILER "gcc")
 set(CMAKE_CXX_COMPILER "clang++")
 
@@ -31,8 +31,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Флаги компиляции
-set(C_FLAGS 
-  "-Wall"
-  "-Wextra"
-  "-Wunknown-pragmas"
+set(CMAKE_C_FLAGS 
+ "-Wall -g"
 )
