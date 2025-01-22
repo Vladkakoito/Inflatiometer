@@ -2,19 +2,26 @@
 #include <Common/Logger/Logger.h>
 #include <Defines.h>
 
+#include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
+static const char * GetFileName (const char *path) {
+  const char *filename = strrchr(path, '/');
+  return filename ? filename + 1 : path;
+}
 
-static int RunParser(int fd) {
+static int RunParser(int fd, const char *command) {
+  
   return 0;
 }
 
-static int RunDataHandler(int fd) {
+static int RunDataHandler(int fd, const char *command) {
+
   return 0;
 }
 
-int DoProcess() {
+int DoProcess(struct TProcessesToRun *processes) {
   int fds[2];
   
   if (pipe(fds) < 0) {
@@ -24,7 +31,7 @@ int DoProcess() {
 
   // вернёт pid дочернего процесса (парсера). 
   // ему отдаём один fd для ввода, себе оставляем другой 
-  int parserPid = RunParser(fds[1]);
+  int parserPid = RunParser(fds[1], processes->parser);
   if (parserPid < 0) {
     LOG("Ошибка запуска парсера: %d", parserPid);
     return parserPid;
@@ -34,7 +41,7 @@ int DoProcess() {
 
   // запуск обработчика данных. желательно, что бы парсер их отдавал порционно.
   // что бы размазать нагрузку по времени
-  int handlerPid = RunDataHandler(fds[0]);
+  int handlerPid = RunDataHandler(fds[0], processes->dataHandler);
   if (handlerPid < 0) {
     LOG("Ошибка запуска обработчика данных: %d", handlerPid);
     return handlerPid;

@@ -2,6 +2,7 @@
 #include "Controller/Impl/IniParser.h"
 #include <Common/Logger/Logger.h>
 #include <Common/Settings.h>
+#include <Defines.h>
 
 static int PrintConfiguration(const struct TSettings * settings) {
   LOG("\n--------- Конфигурация контроллера ---------");
@@ -43,8 +44,12 @@ int main () {
   fclose(iniFile);
   PrintConfiguration(&settings);
 
-  // это временно, потом прикрутится расписание или вызов по команде. из майна уедет
-  int ret = DoProcess();
+  TODO(message("Унести из майна. Сделать запуск по расписанию/команде"));
+  TODO("Добавить возможность запуска нескольких процессов одного типа");
+  struct TProcessesToRun processes;
+  processes.parser = settings.parsers.stores[0];
+  processes.dataHandler = settings.dataHandlers.names[0];
+  int ret = DoProcess(&processes);
   if (ret < 0)
     return ret;
 

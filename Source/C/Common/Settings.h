@@ -19,6 +19,10 @@ struct TSettingsParsers {
   char stores[ESTORESLAST][MAX_FILEPATH];
 };
 
+struct TSettingsDataHandlers {
+  char names[MAX_DATA_HANDLERS][MAX_FILEPATH];
+};
+
 struct TSettingsLogger {
   short logLevel;
   bool addFileLine;
@@ -34,6 +38,7 @@ struct TSettings {
   struct TSettingsLogger logger;
   struct TSettingsParsers parsers;
   struct TSettingsSystem system;
+  struct TSettingsDataHandlers dataHandlers;
 };
 
 // Маппинг наимнований настроек из системы
