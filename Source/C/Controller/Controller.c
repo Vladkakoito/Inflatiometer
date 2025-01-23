@@ -1,8 +1,13 @@
 #include <Controller/Impl/DoProcess.h>
-#include "Controller/Impl/IniParser.h"
+#include "Common/IniParser/IniParser.h"
 #include <Common/Logger/Logger.h>
 #include <Common/Settings.h>
 #include <Defines.h>
+
+static const char * kIniFile = MY_NAME ".ini"; 
+TODO(Вынести эти имена в общее место)
+static const char * kCommonIniFile = "Common.ini"; 
+static const char * kCIniFile = "CCommon.ini"; 
 
 static int PrintConfiguration(const struct TSettings * settings) {
   LOG("\n--------- Конфигурация контроллера ---------");
@@ -25,24 +30,37 @@ static int PrintConfiguration(const struct TSettings * settings) {
   return 0;
 }
 
-static const char * kIniFile = MY_NAME ".ini"; 
+static void ParseOneIniFile(const char * file, struct TSettings * settings)
+{
+  FILE * iniFile = fopen(file, "r");
+  if (!iniFile)
+    LOG("ВНИМАНИЕ, конфигурационный файл (%s) не прочитан.", file);
+  else {
+    ParseIniFile(settings, iniFile); 
+    fclose(iniFile);
+  } 
+
+}
 
 int main () {
-  FILE * iniFile = fopen(kIniFile, "r");
-  if (LoggerInit(iniFile) < 0) {
+  // инициализация в консоль сначала. что бы уже можно было пользоваться. потом перенаправится из настроек.
+  if (LOG_INIT(nullptr) < 0) {
     fprintf(stderr, "Ошибка инициализации логгера");  
     return 1;
   }
-  LOG("Логгер инициализирован");
-  
+
+  // парсинг всех файлов по очереди. приоритетные настройки в конце
   struct TSettings settings;
-  if (!iniFile)
-    LOG("ВНИМАНИЕ, конфигурационный файл (%s) не прочитан."
-        " используются настройки по-умолчанию", kIniFile);
-  else {
-    ParseIniFile(&settings, iniFile);
-    fclose(iniFile);
-  }
+  memset(&settings, 0, sizeof(settings));
+  ParseOneIniFile(kCommonIniFile, &settings);
+  ParseOneIniFile(kCIniFile, &settings);
+  ParseOneIniFile(kIniFile, &settings);
+
+  if (LOG_INIT(&settings.logger) < 0)
+    LOG("Ошибка перенаправления лога в файл");
+  else
+    LOG("Логгер перенаправлен");
+
   PrintConfiguration(&settings);
 
   TODO(Унести из майна. Сделать запуск по расписанию/команде)

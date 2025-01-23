@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static const char * GetFileName (const char *path) {
+static const char* GetFileName (const char *path) {
   const char *filename = strrchr(path, '/');
   return filename ? filename + 1 : path;
 }

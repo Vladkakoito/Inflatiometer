@@ -5,14 +5,13 @@ set (THIS_TARGET "CController")
 set (SOURCE_FILES 
   "Controller.c"
   "Impl/DoProcess.c"
-  "Impl/IniParser.c"
 )
 set (HEADER_FILES "")
 
 add_executable(${THIS_TARGET} ${SOURCE_FILES} ${HEADER_FILES})
 
 target_link_libraries(${THIS_TARGET} 
-  Ini
+  IniParser
   Logger
 ) 
 

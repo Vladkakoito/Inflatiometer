@@ -25,6 +25,8 @@ struct TSettingsDataHandlers {
 
 struct TSettingsLogger {
   short logLevel;
+  bool notAddTs;
+  bool notAddDt;
   bool addFileLine;
   char logFileName[MAX_FILENAME];
   char errFileName[MAX_FILENAME];

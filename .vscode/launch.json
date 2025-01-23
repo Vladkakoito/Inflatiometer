@@ -7,7 +7,7 @@
       "externalConsole": false,
       "cwd": "${workspaceFolder}/build/C/Controller",
       "MIMode": "gdb",
-      "name": "CController",
+      "name": "CController DBG GDB",
       "program": "${workspaceFolder}/build/C/Controller/CController",
       "setupCommands": [
         {
@@ -16,6 +16,14 @@
           "ignoreFailures": true
         }
       ]
+    },
+    {
+      "type": "cppdbg",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/Bin",
+      "name": "CController DBG",
+      "program": "${workspaceFolder}/Bin/CController",
+      "stopAtEntry": false
     }
   ]
 }

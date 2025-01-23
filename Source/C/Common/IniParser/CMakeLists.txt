@@ -1,7 +1,7 @@
-set (THIS_TARGET "Logger")
+set (THIS_TARGET "IniParser")
 
 add_library(${THIS_TARGET} STATIC 
-  "Impl/Logger.c"
+  "Impl/IniParser.c"
 )
 
 target_link_libraries(${THIS_TARGET} Ini)

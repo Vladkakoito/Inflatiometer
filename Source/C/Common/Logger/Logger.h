@@ -1,9 +1,8 @@
 #pragma once
 
-#include <stdio.h>
+struct TSettingsLogger;
 
-
-int LoggerInit(FILE *);
+int LoggerInit(struct TSettingsLogger * settings);
 void WriteLog(const char *, ...);
 void WriteDbg(int, const char *, ...);
 void PrintInfo();
@@ -18,3 +17,4 @@ void PrintInfo();
 #endif
 
 #define LOG_INFO() PrintInfo()
+#define LOG_INIT(settings) LoggerInit(settings)
