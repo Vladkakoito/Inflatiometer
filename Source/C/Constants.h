@@ -1,6 +1,6 @@
 #pragma once
 
-#define MAX_FILENAME 30
+#define MAX_FILENAME 60
 #define MAX_FILEPATH 100
 #define MAX_PARSERS_COUNT 100
 #define MAX_SYSTEM_PATH 100

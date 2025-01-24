@@ -90,6 +90,8 @@ static void Print( const char * msg, FILE * stream, const char * file, int line)
 }
 
 void WriteLog(const char *msg, ...) {
+  if (g_logStream == g_errStream)
+    return;
   char buffer[MAX_MESSAGE_LENGTH];
   va_list args;
   va_start(args, msg);
@@ -100,7 +102,7 @@ void WriteLog(const char *msg, ...) {
 }
 
 void WriteDbg(int level, const char *msg, ...) {
-  if (g_logLevel < level)
+  if (g_logLevel < level || (level == 0 && g_errStream == stderr))
     return;
 
   char buffer[MAX_MESSAGE_LENGTH];

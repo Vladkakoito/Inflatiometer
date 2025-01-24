@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 static const char* GetFileName (const char *path) {
   const char *filename = strrchr(path, '/');
@@ -12,8 +13,21 @@ static const char* GetFileName (const char *path) {
 }
 
 static int RunParser(int fd, const char *command) {
-  
-  return 0;
+  DBG(2, "Запускается парсер %s", command);
+  int pid = fork();
+  if (pid < 0) {
+    LOG("Ошибка вызова fork в RunParser: %s", strerror(pid));
+    return pid;
+  }
+
+  if (pid > 0) {
+    close(fd);
+    return 0;
+  }
+
+  int ec = execlp(command, GetFileName(command), (char*)0);
+  LOG("Ошибка запуска команды парсера (execlp): %s", strerror(ec));
+  exit(0);
 }
 
 static int RunDataHandler(int fd, const char *command) {
@@ -22,6 +36,7 @@ static int RunDataHandler(int fd, const char *command) {
 }
 
 int DoProcess(struct TProcessesToRun *processes) {
+  DBG(2, "Запуск процессов парсеров и обработчиков данных");
   int fds[2];
   
   if (pipe(fds) < 0) {
@@ -37,6 +52,8 @@ int DoProcess(struct TProcessesToRun *processes) {
     return parserPid;
   }
 
+  DBG(2, "Главный процесс вернулся в DoProcess после запуска парсеров");
+
   close(fds[1]); // нам (родителю) он уже не нужен
 
   // запуск обработчика данных. желательно, что бы парсер их отдавал порционно.
@@ -47,9 +64,12 @@ int DoProcess(struct TProcessesToRun *processes) {
     return handlerPid;
   }
 
+  DBG(2, "Главный процесс вернулся в DoProcess после запуска обработчиков данных");
+
   // ждём первого освободившегося. дай бог, парсер
   bool ok = true;
   for (int i = 0; i < 2; ++i) {
+    DBG(5, "Старт ожидания первого из парсеров и обработчиков");
     int status;
     int pid = wait(&status);
     bool isParser = pid == handlerPid;

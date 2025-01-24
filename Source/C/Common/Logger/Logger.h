@@ -10,7 +10,7 @@ void PrintInfo();
 #define LOG(msg, ...) WriteLog(msg, ##__VA_ARGS__), \
                       DBG(0, msg, ##__VA_ARGS__)
 
-#ifdef DEBUG
+#ifndef DEBUG
 #define DBG(level, msg, ...) WriteDbg(level, msg, ##__VA_ARGS__)
 #else
 #define DBG(level, msg, ...) (void)0

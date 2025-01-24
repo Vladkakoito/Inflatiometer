@@ -3,6 +3,7 @@
 #include <Common/Logger/Logger.h>
 #include <Common/Settings.h>
 #include <Defines.h>
+#include <stdio.h>
 
 static const char * kIniFile = MY_NAME ".ini"; 
 TODO(Вынести эти имена в общее место)
@@ -48,6 +49,7 @@ int main () {
     fprintf(stderr, "Ошибка инициализации логгера");  
     return 1;
   }
+  LOG("Старт контроллера... Дальнейший лог будет выводится согласно настройкам.");
 
   // парсинг всех файлов по очереди. приоритетные настройки в конце
   struct TSettings settings;

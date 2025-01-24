@@ -66,7 +66,7 @@ static inline const char * StoresMap(enum EStores storeType) {
 // Найти настройку по имени
 static inline enum ESystemSettings FindSetting(const char * settingName) {
   for (int i = 0; i < ESYSTEMSETTINGSLAST; ++i) {
-    if (strcmp(settingName, SystemMap(i)))
+    if (strcmp(settingName, SystemMap(i)) == 0)
       return i;
   }
   return ESYSTEMSETTINGSLAST;
@@ -75,7 +75,7 @@ static inline enum ESystemSettings FindSetting(const char * settingName) {
 // Найти магазин по имени
 static inline enum EStores FindStore(const char * storeName) {
   for (int i = 0; i < ESTORESLAST; ++i) {
-    if (strcmp(storeName, StoresMap(i)))
+    if (strcmp(storeName, StoresMap(i)) == 0)
       return i;
   }
   return ESTORESLAST;
