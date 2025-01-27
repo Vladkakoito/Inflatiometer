@@ -5,10 +5,10 @@
       "request": "launch",
       "environment": [],
       "externalConsole": false,
-      "cwd": "${workspaceFolder}/build/C/Controller",
+      "cwd": "${workspaceFolder}/Bin",
       "MIMode": "gdb",
       "name": "CController DBG GDB",
-      "program": "${workspaceFolder}/build/C/Controller/CController",
+      "program": "${workspaceFolder}/Bin/CController",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",

@@ -4,6 +4,7 @@
 #include <Common/Settings.h>
 #include <Defines.h>
 #include <stdio.h>
+#include <unistd.h>
 
 static const char * kIniFile = MY_NAME ".ini"; 
 TODO(Вынести эти имена в общее место)
@@ -17,14 +18,14 @@ static int PrintConfiguration(const struct TSettings * settings) {
 
   LOG("Системные:");
   for (int i = 0; i < ESYSTEMSETTINGSLAST; ++i)
-    LOG("\t%s - %s", SystemMap(i), settings->system.values[i]);
+    LOG("    %s - %s", SystemMap(i), settings->system.values[i]);
 
   LOG("Парсеры:");
   for (int i = 0; i < ESTORESLAST; ++i)
   {
     const char * format = i + 1 == ESTORESLAST 
-                          ? "\tМагазин: %s - %s\n--------------------------------------------"
-                          : "\tМагазин: %s - %s";
+                          ? "    Магазин: %s - %s\n--------------------------------------------"
+                          : "    Магазин: %s - %s";
     LOG(format, StoresMap(i), settings->parsers.stores[i]);
   }
   
@@ -64,6 +65,7 @@ int main () {
     LOG("Логгер перенаправлен");
 
   PrintConfiguration(&settings);
+  DBG(1, "Главный процесс: %d", (long)getpid());
 
   TODO(Унести из майна. Сделать запуск по расписанию/команде)
   TODO(Добавить возможность запуска нескольких процессов одного типа)

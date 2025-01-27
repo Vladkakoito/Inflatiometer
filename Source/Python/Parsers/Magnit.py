@@ -2,12 +2,11 @@
 
 import requests
 import json
-import sys
 import re
 import time
 from datetime import datetime
 
-with open(sys.argv[1], "r", encoding="utf-8") as f:
+with open("Parsers/Magnit.json", "r", encoding="utf-8") as f:
     rawCurl = f.read()
 curl = json.loads(rawCurl)
 headers = curl['headers']
@@ -51,9 +50,9 @@ def GetProductsInPage(offset):
   payload["pagination"]["offset"] = offset
   response = requests.post(url = url, headers = headers, json = payload)
 
-  if response.status_code != 200:
+  if response.status_code < 200 or response.status_code >= 300:
     errors.setdefault(url, {})
-    errors[url].setdefault({response.text : [0, {}]});
+    errors[url].setdefault(response.text, [0, {}]);
     errors[url][response.text][0] += 1
     errors[url][response.text][1]["category"] = payload["categories"][0]
     errors[url][response.text][1]["page"] = offset / step

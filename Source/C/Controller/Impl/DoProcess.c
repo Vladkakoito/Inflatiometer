@@ -2,7 +2,9 @@
 #include <Common/Logger/Logger.h>
 #include <Defines.h>
 
+#include <errno.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -14,20 +16,39 @@ static const char* GetFileName (const char *path) {
 
 static int RunParser(int fd, const char *command) {
   DBG(2, "Запускается парсер %s", command);
+
+  LOG_FLUSH(); // иначе потом в созданный процесс буфер скопируется (я так понимаю)
+
   int pid = fork();
   if (pid < 0) {
-    LOG("Ошибка вызова fork в RunParser: %s", strerror(pid));
+    LOG("Ошибка вызова fork в RunParser: %s", strerror(errno));
     return pid;
   }
 
+  // родительский процесс
   if (pid > 0) {
     close(fd);
-    return 0;
+    return pid;
   }
 
-  int ec = execlp(command, GetFileName(command), (char*)0);
-  LOG("Ошибка запуска команды парсера (execlp): %s", strerror(ec));
-  exit(0);
+  if (execlp(command, GetFileName(command), (char*)0) >= 0)
+    exit(0);
+
+  if (errno == EACCES) {
+    LOG("Ошибка запуска команды парсера (execlp): %s. " \
+        "Попытка установить право на выполнение.", strerror(errno));
+
+    struct stat statbuf;
+    if (stat(command, &statbuf) < 0 || chmod(command, statbuf.st_mode | S_IXUSR) < 0){
+      LOG("Не удалось изменить права файла %s. Ошибка: %s", command, strerror(errno));
+      exit(-12);
+    }
+    LOG("Права на выполнение успешно установлены для файла %s. Повторная попытка запуска...", command);
+    if (execlp(command, GetFileName(command), (char*)0) >=  0)
+      exit(0); 
+  }
+  LOG("Ошибка запуска команды парсера (execlp): %s", strerror(errno));
+  exit(-12);
 }
 
 static int RunDataHandler(int fd, const char *command) {

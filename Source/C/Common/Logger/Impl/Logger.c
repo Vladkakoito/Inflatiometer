@@ -68,6 +68,12 @@ int LoggerInit(struct TSettingsLogger * settings) {
   if (!g_errStream)
     g_errStream = (g_logStream == stdout ? stderr : g_logStream);
 
+  // отключение буферизации для дебага. 
+  // перфоманс ни к чему, а своевременные сообщения очень даже
+  // например, для дочернего процесса нужно вручную флашить буфер между fork и exec.
+  if (g_errStream != g_logStream)
+    setvbuf(g_errStream, nullptr /*buffer*/, _IONBF, 0 /*bufSize*/);
+
   g_logLevel = settings->logLevel;
   g_addFileLine = settings->addFileLine;
   g_notAddTs = settings->notAddTs;
@@ -83,13 +89,13 @@ static void Print( const char * msg, FILE * stream, const char * file, int line)
   strftime(timebuf, DATETIME_LENGTH, "%F %T", dt);
 
   if (file)
-    fprintf(stream, "[%s] %-*s(%d): %s\n", timebuf, 30 - (int)strlen(file), file, line, msg);
+    fprintf(stream, "[%s] %-*s(%-*d): %s\n", timebuf, MAX_SRC_FILENAME, file, 3, line, msg);
   else
     fprintf(stream, "[%s] %s\n", timebuf, msg);
 
 }
 
-void WriteLog(const char *msg, ...) {
+void WriteLog(const char *msg,  ...) {
   if (g_logStream == g_errStream)
     return;
   char buffer[MAX_MESSAGE_LENGTH];
@@ -101,7 +107,7 @@ void WriteLog(const char *msg, ...) {
   Print(buffer, g_logStream, nullptr, 0);
 }
 
-void WriteDbg(int level, const char *msg, ...) {
+void WriteDbg(int level, const char *msg, const char* fileName, long line, ...) {
   if (g_logLevel < level || (level == 0 && g_errStream == stderr))
     return;
 
@@ -113,15 +119,23 @@ void WriteDbg(int level, const char *msg, ...) {
   va_end(args);
 
   if (g_addFileLine)
-    Print(buffer, g_errStream, __FILE_NAME__, __LINE__);
+    Print(buffer, g_errStream, fileName, line);
   else 
     Print(buffer, g_errStream, nullptr, 0);
 }
 
 void PrintInfo() {
   LOG("Logger:");
-  LOG("\tLog level: %d", g_logLevel);
-  LOG("\tPrint file and line: %s", g_addFileLine ? "true" : "false");
-  LOG("\tDo not add timestamp at beginning of filename: %s", g_notAddTs ? "true" : "false");
-  LOG("\tDo not add timestamp at end of filename: %s", g_notAddDt ? "true" : "false");
+  LOG("    Log level: %d", g_logLevel);
+  LOG("    Print file and line: %s", g_addFileLine ? "true" : "false");
+  LOG("    Do not add timestamp at beginning of filename: %s", g_notAddTs ? "true" : "false");
+  LOG("    Do not add timestamp at end of filename: %s", g_notAddDt ? "true" : "false");
+}
+
+void LogFlush() {
+  fflush(g_logStream);
+}
+
+void DbgFlush() {
+  fflush(g_errStream);
 }
