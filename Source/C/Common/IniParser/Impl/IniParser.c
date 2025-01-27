@@ -3,6 +3,7 @@
 #include <Common/Third-party/Ini/ini.h>
 
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -55,4 +56,24 @@ static int CommonHandler(void * user, const char * section, const char* name, co
 
 void ParseIniFile(struct TSettings * settings, FILE * iniFile) {
   ini_parse_file(iniFile, CommonHandler, settings);
+}
+
+static bool ParseOneIniFile(struct TSettings * settings, const char * file)
+{
+  FILE * iniFile = fopen(file, "r");
+  if (!iniFile)
+    return false;
+
+  ParseIniFile(settings, iniFile); 
+  fclose(iniFile);
+  return true;
+
+}
+
+void ParseIniFiles(struct TSettings *settings, const char *files[], char *out) {
+  while (*files) {
+    if (!ParseOneIniFile(settings, *files))
+      sprintf(out, "ВНИМАНИЕ, конфигурационный файл (%s) не прочитан.\n", *files);
+    ++files;
+  }
 }

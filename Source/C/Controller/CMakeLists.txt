@@ -13,6 +13,7 @@ add_executable(${THIS_TARGET} ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(${THIS_TARGET} 
   IniParser
   Logger
+  Functions
 ) 
 
 target_include_directories(${THIS_TARGET} PRIVATE 

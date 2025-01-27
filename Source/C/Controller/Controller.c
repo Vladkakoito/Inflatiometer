@@ -24,7 +24,7 @@ static int PrintConfiguration(const struct TSettings * settings) {
   for (int i = 0; i < ESTORESLAST; ++i)
   {
     const char * format = i + 1 == ESTORESLAST 
-                          ? "    Магазин: %s - %s\n--------------------------------------------"
+                          ? "    Магазин: %s - %s\n--------------------------------------------\n"
                           : "    Магазин: %s - %s";
     LOG(format, StoresMap(i), settings->parsers.stores[i]);
   }
@@ -32,17 +32,7 @@ static int PrintConfiguration(const struct TSettings * settings) {
   return 0;
 }
 
-static void ParseOneIniFile(const char * file, struct TSettings * settings)
-{
-  FILE * iniFile = fopen(file, "r");
-  if (!iniFile)
-    LOG("ВНИМАНИЕ, конфигурационный файл (%s) не прочитан.", file);
-  else {
-    ParseIniFile(settings, iniFile); 
-    fclose(iniFile);
-  } 
 
-}
 
 int main () {
   // инициализация в консоль сначала. что бы уже можно было пользоваться. потом перенаправится из настроек.
@@ -55,14 +45,16 @@ int main () {
   // парсинг всех файлов по очереди. приоритетные настройки в конце
   struct TSettings settings;
   memset(&settings, 0, sizeof(settings));
-  ParseOneIniFile(kCommonIniFile, &settings);
-  ParseOneIniFile(kCIniFile, &settings);
-  ParseOneIniFile(kIniFile, &settings);
+  const char *iniFiles[] = {kCommonIniFile, kCIniFile, kIniFile, nullptr};
+  char outIniParsing[500] = {'\0'};
+  ParseIniFiles(&settings, iniFiles, outIniParsing);
 
   if (LOG_INIT(&settings.logger) < 0)
     LOG("Ошибка перенаправления лога в файл");
   else
     LOG("Логгер перенаправлен");
+  if (outIniParsing[0] != '\0')
+    LOG(outIniParsing);
 
   PrintConfiguration(&settings);
   DBG(1, "Главный процесс: %d", (long)getpid());

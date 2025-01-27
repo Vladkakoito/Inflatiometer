@@ -1,4 +1,5 @@
 #include <Controller/Impl/DoProcess.h>
+#include <Common/Functions/Functions.h>
 #include <Common/Logger/Logger.h>
 #include <Defines.h>
 
@@ -8,11 +9,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
-
-static const char* GetFileName (const char *path) {
-  const char *filename = strrchr(path, '/');
-  return filename ? filename + 1 : path;
-}
 
 static int RunParser(int fd, const char *command) {
   DBG(2, "Запускается парсер %s", command);
@@ -43,7 +39,7 @@ static int RunParser(int fd, const char *command) {
       LOG("Не удалось изменить права файла %s. Ошибка: %s", command, strerror(errno));
       exit(-12);
     }
-    LOG("Права на выполнение успешно установлены для файла %s. Повторная попытка запуска...", command);
+    LOG("Права на выполнение успешно установлены для файла %s. Повторная попытка запуска.", command);
     if (execlp(command, GetFileName(command), (char*)0) >=  0)
       exit(0); 
   }
