@@ -1,6 +1,7 @@
 #include <Common/IniParser/IniParser.h>
 #include <Common/Logger/Logger.h>
 #include <Common/Settings.h>
+#include <Common/Third-party/Json/cJSON.h>
 
 #include <string.h>
 #include <unistd.h>
