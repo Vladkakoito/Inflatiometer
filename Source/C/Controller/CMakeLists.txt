@@ -18,8 +18,11 @@ target_link_libraries(${THIS_TARGET}
 
 target_include_directories(${THIS_TARGET} PRIVATE 
   "${CMAKE_SOURCE_DIR}/C"
+  "${CMAKE_SOURCE_DIR}"
 )
 
 target_compile_definitions(${THIS_TARGET} PRIVATE 
   MY_NAME="${THIS_TARGET}"
 )
+
+list(APPEND ALL_TARGETS ${THIS_TARGET})

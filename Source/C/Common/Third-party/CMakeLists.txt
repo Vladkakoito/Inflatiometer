@@ -25,3 +25,35 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 add_subdirectory(Ini)
+
+# Copyright (c) 2009-2017 Dave Gamble and cJSON contributors
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
+# associated documentation files (the "Software"), to deal in the Software without restriction, 
+# including without limitation the rights to use, copy, modify, merge, publish, distribute, 
+# sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is 
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all copies or 
+# substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+# INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+# DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+set(ENABLE_CJSON_TEST OFF CACHE BOOL "Enable building the tests. (on by default)")
+set(ENABLE_CJSON_UTILS OFF CACHE BOOL "Enable building cJSON_Utils. (off by default)")
+set(ENABLE_TARGET_EXPORT OFF CACHE BOOL "Enable the export of CMake targets. Turn off if it makes problems. (on by default)")
+set(ENABLE_CUSTOM_COMPILER_FLAGS OFF CACHE BOOL "Enable custom compiler flags (currently for Clang, GCC and MSVC). Turn off if it makes problems. (on by default)")
+set(ENABLE_VALGRIND OFF CACHE BOOL "Run tests with valgrind. (off by default)")
+set(ENABLE_SANITIZERS OFF CACHE BOOL "Compile cJSON with AddressSanitizer and UndefinedBehaviorSanitizer enabled (if possible). (off by default)")
+set(ENABLE_SAFE_STACK OFF CACHE BOOL "Enable the SafeStack instrumentation pass. Currently only works with the Clang compiler. (off by default)")
+set(DBUILD_SHARED_LIBS OFF CACHE BOOL "Build the shared libraries. (on by default)")
+set(BUILD_SHARED_AND_STATIC_LIBS OFF CACHE BOOL "Build both shared and static libraries. (off by default)")
+set(ENABLE_LOCALES OFF CACHE BOOL "Enable the usage of localeconv method. ( on by default )")
+set(CJSON_OVERRIDE_BUILD_SHARED_LIBS OFF CACHE BOOL "Enable overriding the value of BUILD_SHARED_LIBS with -DCJSON_BUILD_SHARED_LIBS.")
+set(ENABLE_CJSON_VERSION_SO OFF CACHE BOOL "Enable cJSON so version. ( on by default )")
+set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}")
+add_subdirectory(Json)

@@ -33,23 +33,8 @@ endif()
 
 add_compile_options(${COMMON_COMPILE_FLAGS})
 
-# Рекурсивная функция. Бежит по всем поддиректориям и собирает таргеты в переменную
-function (GetAllTargets RESULT CUR_DIR)
-    get_property(TARGETS DIRECTORY ${CUR_DIR} PROPERTY BUILDSYSTEM_TARGETS)
-    get_property(SUBDIRS DIRECTORY ${CUR_DIR} PROPERTY SUBDIRECTORIES)
-
-    foreach(SUBDIR ${SUBDIRS})
-    GetAllTargets(SUBDIR_TARGETS ${SUBDIR})
-      list(APPEND TARGETS ${SUBDIR_TARGETS})
-    endforeach()
-
-    set(${RESULT} ${TARGETS} PARENT_SCOPE)
-endfunction()
-
 set(ALL_TARGETS "")
-GetAllTargets(ALL_TARGETS ${CMAKE_SOURCE_DIR})
 message(STATUS "Found targets: ${ALL_TARGETS}") 
-
 
 # Очистка целевой директории. Туда будут скопированы собранные таргеты и ресурсы.
 add_custom_target(CleanOutputDir ALL

@@ -20,3 +20,5 @@ target_include_directories(${THIS_TARGET} PRIVATE
 target_compile_definitions(${THIS_TARGET} PRIVATE 
   MY_NAME="${THIS_TARGET}"
 )
+
+list(APPEND ALL_TARGETS ${THIS_TARGET})
