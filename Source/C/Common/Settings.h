@@ -28,6 +28,7 @@ struct TSettingsLogger {
   bool notAddTs;
   bool notAddDt;
   bool addFileLine;
+  bool notStdout;
   char logFileName[MAX_FILENAME];
   char errFileName[MAX_FILENAME];
 };

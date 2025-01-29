@@ -1,0 +1,3 @@
+[submodule "Source/C/Common/Third-party/Json"]
+	path = Source/C/Common/Third-party/Json
+	url = git@github.com:DaveGamble/cJSON.git

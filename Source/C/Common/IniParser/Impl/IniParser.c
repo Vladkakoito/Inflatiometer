@@ -25,6 +25,8 @@ static int SectionLoggerHandler(struct TSettingsLogger * settings, const char* n
     settings->notAddTs = value && strcmp(value, "true") == 0;
   else if (strcmp(name, "not_add_dt_after_filenames") == 0)
     settings->notAddDt = value && strcmp(value, "true");
+  else if (strcmp(name, "not_stdout") == 0)
+    settings->notStdout = true;
   
   return 0;
 }

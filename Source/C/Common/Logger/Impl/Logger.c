@@ -13,6 +13,7 @@ static int g_logLevel = 0;
 static bool g_addFileLine = false;
 static bool g_notAddTs = false;
 static bool g_notAddDt = false;
+static bool g_notStd = false;
 
 // функция открывает файл на запись. 
 // добавляет timestamp в начало и datetime в конец имени файла если надо
@@ -51,7 +52,7 @@ static FILE* OpenLogFile(const char* path) {
 }
 
 int LoggerInit(struct TSettingsLogger * settings) {
-  g_logStream = stdout;
+  g_logStream = settings->notStdout ? stderr : stdout;
   g_errStream = stderr;
 
   if (!settings)
@@ -63,15 +64,10 @@ int LoggerInit(struct TSettingsLogger * settings) {
   if (settings->errFileName[0] != 0)
     g_errStream = OpenLogFile(settings->errFileName);
 
-  if (!g_logStream)
-    g_logStream = stdout;
-  if (!g_errStream)
-    g_errStream = (g_logStream == stdout ? stderr : g_logStream);
-
   // отключение буферизации для дебага. 
   // перфоманс ни к чему, а своевременные сообщения очень даже
   // например, для дочернего процесса нужно вручную флашить буфер между fork и exec.
-  if (g_errStream != g_logStream)
+  if (g_errStream != g_logStream || g_errStream == stderr)
     setvbuf(g_errStream, nullptr /*buffer*/, _IONBF, 0 /*bufSize*/);
 
   g_logLevel = settings->logLevel;
@@ -127,9 +123,10 @@ void WriteDbg(int level, const char *msg, const char* fileName, long line, ...) 
 void PrintInfo() {
   LOG("Logger:");
   LOG("    Log level: %d", g_logLevel);
-  LOG("    Print file and line: %s", g_addFileLine ? "true" : "false");
-  LOG("    Do not add timestamp at beginning of filename: %s", g_notAddTs ? "true" : "false");
-  LOG("    Do not add timestamp at end of filename: %s", g_notAddDt ? "true" : "false");
+  LOG("    Печатать имя файла и номер строки (для DBG): %s", g_addFileLine ? "true" : "false");
+  LOG("    Не добавлять timestamp в начало имени файлов лога: %s", g_notAddTs ? "true" : "false");
+  LOG("    Не добавлять дату и время в конец имени файла лога: %s", g_notAddDt ? "true" : "false");
+  LOG("    Не писать логи в stdout (оставить для PIPE): %s", g_notStd ? "true" : "false");
 }
 
 void LogFlush() {

@@ -93,11 +93,6 @@ foreach(TARGET IN LISTS ALL_TARGETS)
   target_include_directories(${TARGET} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 endforeach()
 
-# Добавление флагов компиляции
-foreach(TARGET IN LISTS ALL_TARGETS)
-  target_compile_options(${TARGET} PUBLIC ${C_FLAGS})
-endforeach()
-
 # Копирование всех таргетов в выходной каталог
 foreach(TARGET IN LISTS ALL_TARGETS)
   get_target_property(TARGET_TYPE ${TARGET} TYPE)
