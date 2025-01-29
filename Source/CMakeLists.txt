@@ -10,6 +10,8 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   add_definitions(-DDEBUG)
 endif()
 
+set(ALL_TARGETS "")
+
 # Подключение поддиректорий из Settings.cmake
 set(HAS_C_TARGETS FALSE)
 set(HAS_CPP_TARGETS FALSE)
@@ -33,7 +35,6 @@ endif()
 
 add_compile_options(${COMMON_COMPILE_FLAGS})
 
-set(ALL_TARGETS "")
 message(STATUS "Found targets: ${ALL_TARGETS}") 
 
 # Очистка целевой директории. Туда будут скопированы собранные таргеты и ресурсы.
