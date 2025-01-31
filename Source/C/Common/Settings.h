@@ -37,6 +37,10 @@ struct TSettingsSystem {
   char values[ESYSTEMSETTINGSLAST][MAX_SYSTEM_PATH];
 };
 
+struct TDatabaseManager {
+  
+};
+
 struct TSettings {
   struct TSettingsLogger logger;
   struct TSettingsParsers parsers;

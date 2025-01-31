@@ -11,7 +11,7 @@ TODO(Вынести эти имена в общее место)
 static const char * kCommonIniFile = "Common.ini"; 
 static const char * kCIniFile = "CCommon.ini"; 
 
-static int PrintConfiguration(const struct TSettings * settings) {
+static void PrintConfiguration(const struct TSettings * settings) {
   LOG("\n--------- Конфигурация контроллера ---------");
 
   LOG_INFO();
@@ -28,8 +28,6 @@ static int PrintConfiguration(const struct TSettings * settings) {
                           : "    Магазин: %s - %s";
     LOG(format, StoresMap(i), settings->parsers.stores[i]);
   }
-  
-  return 0;
 }
 
 
@@ -44,17 +42,8 @@ int main () {
 
   // парсинг всех файлов по очереди. приоритетные настройки в конце
   struct TSettings settings;
-  memset(&settings, 0, sizeof(settings));
   const char *iniFiles[] = {kCommonIniFile, kCIniFile, kIniFile, nullptr};
-  char outIniParsing[500] = {'\0'};
-  ParseIniFiles(&settings, iniFiles, outIniParsing);
-
-  if (LOG_INIT(&settings.logger) < 0)
-    LOG("Ошибка перенаправления лога в файл");
-  else
-    LOG("Логгер перенаправлен");
-  if (outIniParsing[0] != '\0')
-    LOG(outIniParsing);
+  PARSE_INI_AND_INIT_LOGGER(settings, iniFiles);
 
   PrintConfiguration(&settings);
   DBG(1, "Главный процесс: %d", (long)getpid());

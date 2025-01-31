@@ -1,5 +1,3 @@
-# Таргет с менеджером БД. Структуру там сделать по описанию, или проверить.
-# Больше пока не знаю зачем
 set (THIS_TARGET "CDatabaseManager")
 
 set (SOURCE_FILES "DatabaseManager.c")
