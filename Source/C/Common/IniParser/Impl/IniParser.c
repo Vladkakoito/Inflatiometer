@@ -31,6 +31,16 @@ static int SectionLoggerHandler(struct TSettingsLogger * settings, const char* n
   return 0;
 }
 
+static int SectionDBManager(struct TSettingsDatabaseManager * settings, const char* name, const char* value) {
+
+  if (strcmp(name, "manager") == 0)
+    strcpy(settings->selfName, value);
+  else if (strcmp(name, "structure") == 0)
+    strcpy(settings->structurePath, value);
+
+  return 0;
+}
+
 static void SectionSystemHandler(struct TSettingsSystem * settings, const char* name, const char* value) {
   enum ESystemSettings setting = FindSetting(name);
   if (setting != ESYSTEMSETTINGSLAST)

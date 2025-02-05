@@ -37,8 +37,9 @@ struct TSettingsSystem {
   char values[ESYSTEMSETTINGSLAST][MAX_SYSTEM_PATH];
 };
 
-struct TDatabaseManager {
-  
+struct TSettingsDatabaseManager {
+  char selfName[MAX_FILEPATH];
+  char structurePath[MAX_FILEPATH];
 };
 
 struct TSettings {
@@ -46,6 +47,7 @@ struct TSettings {
   struct TSettingsParsers parsers;
   struct TSettingsSystem system;
   struct TSettingsDataHandlers dataHandlers;
+  struct TSettingsDatabaseManager dbManager;
 };
 
 // Маппинг наимнований настроек из системы
