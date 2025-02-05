@@ -46,21 +46,33 @@ endforeach()
 # Таргет-маркер окончания сборки всех таргетов.
 add_custom_target(AllTargets ALL
   COMMAND ${CMAKE_COMMAND} -E echo "Built targets."
+  COMMAND ${CMAKE_COMMAND} -E make_directory "${COPY_TO}"
   DEPENDS ${ALL_TARGETS}
 )
 
-set(COPY_DESTINATION_DIR "@COPY_TO@")
-set(COPY_SOURCES_DIRS "@COPY_FROM@")
-set(TARGETS_TO_COPY "@ALL_TARGETS@")
+# Копирование всех таргетов в выходной каталог
+foreach(TARGET IN LISTS ALL_TARGETS)
+  get_target_property(TARGET_TYPE ${TARGET} TYPE)
+  if (NOT TARGET_TYPE STREQUAL "STATIC_LIBRARY")
+    # Добавляем команду копирования для каждой цели
+    add_custom_command(
+      TARGET AllTargets
+      POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${TARGET}> "${COPY_TO}"
+      COMMAND ${CMAKE_COMMAND} -E echo "Copying ${TARGET} to ${COPY_TO}"
+    )
+  endif()
+endforeach()
+
 configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/CMake/PostCopy.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/PostCopy.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/CMake/PostCopyResources.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/PostCopyResources.cmake"
     @ONLY
 )
 
 add_custom_command(
     TARGET AllTargets
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/PostCopy.cmake"
+    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/PostCopyResources.cmake"
     COMMENT "Копирование таргетов, ресурсов и прочей обвязки после сборки всех целевых проектов"
 )

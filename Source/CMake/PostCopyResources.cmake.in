@@ -10,9 +10,11 @@ function(copy_if_different SOURCE_DIR TARGET_DIR)
     endforeach()
 endfunction()
 
+set (DIRS "@COPY_FROM@")
+message(STATUS "Запуск копирования каталогов @COPY_FROM@")
 
 # Команда копирования ресурсов, скриптов, и прочей обвязки
-foreach(DIR IN LISTS COPY_SOURCES_DIRS)
+foreach(DIR IN LISTS DIRS)
   # Получение имени последнего каталога в копируемом пути. Для создания уникального имени таргета
   string(LENGTH "${DIR}" PATH_LENGTH)
   if(PATH_LENGTH GREATER 0)
@@ -33,18 +35,8 @@ foreach(DIR IN LISTS COPY_SOURCES_DIRS)
     set(LAST_NAME "")
   endif()
 
-  message(STATUS "Copy${LAST_NAME} to ${COPY_DESTINATION_DIR}") 
-  copy_if_different("${CMAKE_PROJECT_DIR}/${DIR}" "${COPY_DESTINATION_DIR}")
+  message(STATUS "Copy${LAST_NAME} to @COPY_TO@") 
+  copy_if_different("@CMAKE_PROJECT_DIR@/${DIR}" "@COPY_TO@")
 endforeach() 
 
-# Копирование всех таргетов в выходной каталог
-foreach(TARGET IN LISTS TARGETS_TO_COPY)
-  get_target_property(TARGET_TYPE ${TARGET} TYPE)
-  if (NOT ${TARGET_TYPE} STREQUAL "STATIC_LIBRARY")
-    message(STATUS "Additional target: Copy${TARGET}") 
-    execute_process(
-      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${TARGET}> ${COPY_TO}
-    )
-  endif()
-endforeach()
 
