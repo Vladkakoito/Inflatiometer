@@ -1,0 +1,168 @@
+---
+
+Language: Cpp
+Standard: c++20
+
+TabWidth: 2
+UseTab: Never
+LineEnding: LF
+
+AllowShortCompoundRequirementOnASingleLine: true
+AllowBreakBeforeNoexceptSpecifier: Never
+BreakAdjacentStringLiterals: true
+
+# QualifierAlignment: Left
+
+AccessModifierOffset: -2
+AlignAfterOpenBracket: Align
+AlignConsecutiveMacros: Consecutive
+AlignConsecutiveAssignments: None
+AlignConsecutiveDeclarations: None
+AlignEscapedNewlines: Right
+AlignOperands: AlignAfterOperator
+
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 0
+
+AllowAllArgumentsOnNextLine: true
+AllowAllConstructorInitializersOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: InlineOnly
+
+AllowShortLambdasOnASingleLine: Inline
+
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+AlwaysBreakTemplateDeclarations: Yes
+BinPackArguments: true
+BinPackParameters: true
+BitFieldColonSpacing: Both
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: Never
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: true
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: false
+  IndentBraces: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+BreakBeforeBinaryOperators: None
+BreakBeforeBraces: Custom
+BreakBeforeInheritanceComma: false
+BreakInheritanceList: AfterComma
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializersBeforeComma: false
+BreakConstructorInitializers: BeforeComma
+BreakStringLiterals: false
+ColumnLimit: 100
+#CommentPragmas:  '^ IWYU pragma:'
+CompactNamespaces: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth: 2
+ContinuationIndentWidth: 2
+Cpp11BracedListStyle: true
+DerivePointerAlignment: false
+DisableFormat: false
+ExperimentalAutoDetectBinPacking: false
+FixNamespaceComments: true
+IndentCaseLabels: true
+IndentPPDirectives: None
+IndentWidth: 2
+IndentWrappedFunctionNames: false
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 2
+NamespaceIndentation: None
+PenaltyBreakAssignment: 10
+PenaltyBreakBeforeFirstCallParameter: 1000
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakString: 1000
+PenaltyBreakTemplateDeclaration: 0
+PenaltyExcessCharacter: 1000
+PenaltyReturnTypeOnItsOwnLine: 1000
+PointerAlignment: Right
+ReflowComments: false
+SortUsingDeclarations: false
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: false
+SpaceAroundPointerQualifiers: Default
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCpp11BracedList: false
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 1
+SpacesInAngles: Never
+SpacesInContainerLiterals: false
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+StatementAttributeLikeMacros: []
+
+InsertNewlineAtEOF: true
+# RemoveSemicolon: true
+
+# Concept C++20
+IndentRequires: false
+IndentRequiresClause: true
+BreakBeforeConceptDeclarations: Never
+RequiresClausePosition: OwnLine
+RequiresExpressionIndentation: OuterScope
+
+# SeparateDefinitionBlocks: Always
+
+# IntegerLiteralSeparator:
+#   Binary: 0
+#   Decimal: 3
+#   Hex: -1
+
+SortIncludes: CaseInsensitive
+# SortIncludes: false
+IncludeIsMainSourceRegex: "<(A-Za-z.c|A-Za-z.cpp)>"
+IncludeBlocks: Regroup
+
+IncludeCategories:
+  # Constants
+  - Regex: "<(Constants.h|Defines.h)>"
+    Priority: 5
+  # Impl
+  - Regex: 'Impl\/'
+    Priority: 996
+  # third party libs
+  - Regex: '<Third-party\/'
+    CaseSensitive: true
+    Priority: 30
+  # C std lib
+  - Regex: '<([a-z0-9.h])+>'
+    CaseSensitive: true
+    Priority: 11
+  # C++ std lib
+  - Regex: '<([A-Za-z0-9\Q/-_\E])+>'
+    Priority: 10
+  # Headers in <> with extension.
+  - Regex: '<([A-Za-z0-9.\Q/-_\E])+>'
+    Priority: 200
+
+
+WhitespaceSensitiveMacros: []
+
+# Макросы, которые должны интерпретироваться как типы
+# Макросы не в этом списке будут восприняты как вызовы функций и перенесены на отдельную строку.
+TypenameMacros:
+

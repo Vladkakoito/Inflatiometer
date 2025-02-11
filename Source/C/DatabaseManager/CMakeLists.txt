@@ -1,6 +1,9 @@
 set (THIS_TARGET "CDatabaseManager")
 
-set (SOURCE_FILES "DatabaseManager.c")
+set (SOURCE_FILES 
+  "DatabaseManager.c"
+  "Impl/TreeManager.c"
+)
 set (HEADER_FILES "")
 
 add_executable(${THIS_TARGET} ${SOURCE_FILES} ${HEADER_FILES})

@@ -9,3 +9,5 @@
 #define DATETIME_LENGTH 20
 #define TIMESTAMP_LENGTH 11
 #define MAX_SRC_FILENAME 20
+
+#define MAX_CATEGORIES_DEPTH 8 // на каждую по байту. хочу, что бы влезло в число.
