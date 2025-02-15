@@ -13,63 +13,90 @@
 
 // Стек категории, текущей для вызова хендлера при рекурсивном обходе
 static const struct cJSON *g_categoriesStack[MAX_CATEGORIES_DEPTH];
-// Метка последней созданной директории в текущем стеке.
-static size_t g_maked = 0;
 
-typedef int (*TProductHandler)(size_t, const struct cJSON *);
+// Код текущей категории
+static uint64_t g_categories = 0;
 
-// Обработчик для передачи в обхо-45д дерева.
-static int UpdateHandler(size_t n, struct cJSON *product) {
+// Обработчик. регистрируется извне. Вызывается для кажого узла 1 раз.
+static TProductHandler g_productHandler;
+
+// Наполнить список тегов из ноды
+static int FillArrayTags(const char *resultTags[MAX_TAGS_COUNT], const cJSON *node) {
+  DBG(10, "Наполнение тегов из ноды");
+  size_t i = 0;
+  if (!node)
+    return 0;
+  if (!cJSON_IsArray(node))
+    RETURN_LOG(-48, "В ноде в описаниии продуктов имеется элемент \"tags\", однако он не массив");
+
+  cJSON *tag = nullptr;
+  cJSON_ArrayForEach(tag, node) {
+    if (!tag || !cJSON_IsString(tag))
+      RETURN_LOG(-49, "Тег ноды в описании продуктов не является строкой");
+    resultTags[i++] = tag->valuestring;
+  }
+  resultTags[i] = nullptr;
+
+  return 0;
+}
+
+// Получить данные по продукту и вызвать обработчик
+static int ProcessProduct(size_t n, const struct cJSON *product) {
   DBG(9, "Вызван обработчик для продукта");
 
   if (!cJSON_IsObject(product))
-    RETURN_LOG(-45, "error: UpdateHandler - не ожидаемый тип JSON-объекта, описывающего продукт");
-
-  TODO(
-    "Сейчас присходит формирование строкового значения каждый раз заново. Можно сэффективничать");
-
-  uint64_t categories = 0;
-  for (size_t i = 0; i < n; ++i) {
-    if (!cJSON_IsObject(g_categoriesStack[i]))
-      RETURN_LOG(-41, "error: Нода не является объектом (уровень вложенности %d)", i);
-
-    struct cJSON *name = cJSON_GetObjectItem(g_categoriesStack[i], "name");
-    if (!name || !cJSON_IsString(name))
-      RETURN_LOG(-43, "error: Не получено имя для ноды (уровень вложенности %d)", i);
-
-    struct cJSON *index = cJSON_GetObjectItem(g_categoriesStack[i], "i");
-    if (!index || !cJSON_IsNumber(index))
-      RETURN_LOG(-44, "error: Не получен индекс для ноды (уровень вложенности %d, имя %s)", i,
-                 name->valuestring);
-
-    if (i != 0)
-      categories <<= 8;
-    categories &= index->valueint;
-    char bufName[17];
-    sprintf(bufName, "%016lX", categories);
-    DBG(10, "Обработка категории %016lX, имя: %s", categories, name->valuestring);
-  }
+    RETURN_LOG(-45, "error: Не ожидаемый тип JSON-объекта, описывающего продукт");
 
   struct cJSON *name = cJSON_GetObjectItem(product, "name");
   if (!name || !cJSON_IsString(name))
-    RETURN_LOG(-46, "error: Не получено имя продукта (категория %016lX)", categories);
+    RETURN_LOG(-46, "error: Не получено имя продукта (категория %016lX)", g_categories);
 
   struct cJSON *index = cJSON_GetObjectItem(product, "i");
   if (!index || !cJSON_IsNumber(index))
-    RETURN_LOG(-47, "error: Не получен индекс для продукта (категория %016lX, имя %s)", categories,
-               name->valuestring, name->valuestring);
+    RETURN_LOG(-47, "error: Не получен индекс для продукта (категория %016lX, имя %s)",
+               g_categories, name->valuestring);
 
-  char bufProduct[22];
-  sprintf(bufProduct, "%016lX.%04X", categories, index->valueint);
-  DBG(9, "Обработка продукта %s, индекс %d", bufProduct, index->valueint);
-  mkdir(bufProduct, S_IRWXU);
+  DBG(9, "Обработка продукта %s, индекс %d", name->valuestring, index->valueint);
+
+  const char *tags[MAX_TAGS_COUNT];
+  int ret = FillArrayTags(tags, product);
+  if (ret == 0)
+    ret = g_productHandler(g_categories, index->valueint, name->valuestring, tags);
+
+  return ret;
+}
+
+// Получить данные по категории и вызвать обработчик
+static int ProcessCategory(size_t n, const struct cJSON *category) {
+  DBG(9, "Вызван обработчик для категории");
+
+  if (!cJSON_IsObject(category))
+    RETURN_LOG(-45, "error: Не ожидаемый тип JSON-объекта, описывающего продукт");
+
+  struct cJSON *name = cJSON_GetObjectItem(category, "name");
+  if (!name || !cJSON_IsString(name))
+    RETURN_LOG(-46, "error: Не получено имя вложенной категории (категория %016lX)", g_categories);
+
+  struct cJSON *index = cJSON_GetObjectItem(category, "i");
+  if (!index || !cJSON_IsNumber(index))
+    RETURN_LOG(-47, "error: Не получен индекс для категории (категория %016lX, имя %s)",
+               g_categories, name->valuestring);
+
+  g_categories &= category->valueint;
+
+  const char *tags[MAX_TAGS_COUNT];
+  int ret = FillArrayTags(tags, category);
+  if (ret == 0)
+    ret = g_productHandler(g_categories, -1 /*product*/, name->valuestring, tags);
+
+  return ret;
 }
 
 // Для упрощения, решил вынести рекурсивный обход отдельно, что бы не нагружать
 // его и не путаться. Для каждого продукта будет вызван хендлер, в глобальном
 // скоупе на момент вызова хендлера будет актуальный Список категорий для
 // текущего продукта. Индекс указывает на конец стека категорий (за посл. элемент).
-static int IterationTroughTree(TProductHandler handler, const struct cJSON *node, size_t i) {
+static int IterationTroughTree(const struct cJSON *node, size_t i) {
   if (!cJSON_IsObject(node))
     return -41;
 
@@ -77,18 +104,35 @@ static int IterationTroughTree(TProductHandler handler, const struct cJSON *node
   // категория, и надо проваливаться ещё глубже. если нет - то это уже продукт.
   const cJSON *childs = cJSON_GetObjectItem(node, "childs");
   if (!childs)
-    return handler(i, node);
+    return ProcessProduct(i, node);
   if (!cJSON_IsArray(childs))
     return -42;
 
   g_categoriesStack[i++] = node;
+  g_categories <<= 8;
+  int ret = ProcessCategory(i, node);
+  if (ret != 0)
+    return ret;
+
   cJSON_ArrayForEach(node, childs) {
-    int ret = IterationTroughTree(handler, childs, i);
+    ret = IterationTroughTree(childs, i);
     if (ret != 0)
       return ret;
   }
+  g_categories >>= 8;
   return 0;
 }
 
-int UpdateStructure(const struct cJSON *structure) {
+int ProcessAllNodes(const char *contentStructure) {
+  cJSON *dbStructure = cJSON_Parse(contentStructure);
+  if (!dbStructure)
+    RETURN_LOG(-40, "Не удалось прочитать файл структуры БД: %s", cJSON_GetErrorPtr());
+
+  int ret = IterationTroughTree(dbStructure, 0);
+  cJSON_free(dbStructure);
+  return ret;
+}
+
+void SetProductHandler(TProductHandler h) {
+  g_productHandler = h;
 }
