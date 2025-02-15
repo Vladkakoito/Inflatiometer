@@ -1,9 +1,12 @@
-#include "Common/IniParser/IniParser.h"
+#include <Defines.h>
+
+#include <stdlib.h>
+
 #include <Common/Logger/Logger.h>
 #include <Common/Settings.h>
+
+#include "Common/IniParser/IniParser.h"
 #include <Common/Third-party/Json/cJSON.h>
-#include <Defines.h>
-#include <stdlib.h>
 
 static const char *kIniFile = MY_NAME ".ini";
 static const char *kCommonIniFile = "Common.ini";
@@ -18,11 +21,13 @@ void DBStructureFree() {
   }
 }
 
-static void
-PrintConfiguration(const struct TSettingsDatabaseManager *settings) {
+static void PrintConfiguration(const struct TSettingsDatabase *settings) {
   LOG("\n--------- Конфигурация менеджера БД ---------");
-  LOG("\nmanager: %s", settings->selfName);
-  LOG("\nstructure: %s", settings->structurePath);
+  LOG("\nmanager: %s", settings->path);
+  LOG("\ncontent description: %s", settings->contentDescriptionPath);
+  LOG("\ncmanager: %s", settings->manager);
+  LOG("\nserver: %s", settings->server);
+  LOG("\ntype: %s", DbMap(settings->type));
   LOG("\n---------------------------------------------");
 }
 
@@ -30,7 +35,7 @@ int main(int argc, char *argv[]) {
   struct TSettings settings;
   const char *iniFiles[] = {kCommonIniFile, kCIniFile, kIniFile, nullptr};
   PARSE_INI_AND_INIT_LOGGER(settings, iniFiles);
-  PrintConfiguration(&settings.dbManager);
+  PrintConfiguration(&settings.db);
 
   if (argc != 2) {
     LOG("Использование: ./%s [command]", argv[0]);
@@ -38,7 +43,7 @@ int main(int argc, char *argv[]) {
   }
 
   atexit(DBStructureFree);
-  cJSON *dbStructure = cJSON_Parse(settings.dbManager.structurePath);
+  cJSON *dbStructure = cJSON_Parse(settings.db.contentDescriptionPath);
   if (!dbStructure) {
     LOG("Не удалось прочитать файл структуры БД: %s", cJSON_GetErrorPtr());
     return -40;

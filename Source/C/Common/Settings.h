@@ -1,19 +1,17 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <Types.h>
 #include <Constants.h>
+
 #include <string.h>
 
-enum EStores {
-  EMAGNIT = 0,
-  ESTORESLAST
-};
+#include <Types.h>
 
-enum ESystemSettings {
-  EPYTHONPATH = 0,
-  ESYSTEMSETTINGSLAST
-};
+enum EStores { EMAGNIT = 0, ESTORESLAST };
+
+enum ESystemSettings { EPYTHONPATH = 0, ESYSTEMSETTINGSLAST };
+
+enum EDatabases { EPOSTGRES = 0, EDATABASELAST };
 
 struct TSettingsParsers {
   char stores[ESTORESLAST][MAX_FILEPATH];
@@ -37,9 +35,12 @@ struct TSettingsSystem {
   char values[ESYSTEMSETTINGSLAST][MAX_SYSTEM_PATH];
 };
 
-struct TSettingsDatabaseManager {
-  char selfName[MAX_FILEPATH];
-  char structurePath[MAX_FILEPATH];
+struct TSettingsDatabase {
+  char manager[MAX_FILEPATH];
+  char contentDescriptionPath[MAX_FILEPATH];
+  char server[MAX_FILEPATH];
+  char path[MAX_FILEPATH];
+  enum EDatabases type;
 };
 
 struct TSettings {
@@ -47,21 +48,21 @@ struct TSettings {
   struct TSettingsParsers parsers;
   struct TSettingsSystem system;
   struct TSettingsDataHandlers dataHandlers;
-  struct TSettingsDatabaseManager dbManager;
+  struct TSettingsDatabase db;
 };
 
 // Маппинг наимнований настроек из системы
-static inline const char * SystemMap(enum ESystemSettings storeType) {
+static inline const char *SystemMap(enum ESystemSettings storeType) {
   switch (storeType) {
     case EPYTHONPATH:
       return "python";
     default:
-      return nullptr;  
+      return nullptr;
   }
 }
 
 // Маппинг наименований магазинов
-static inline const char * StoresMap(enum EStores storeType) {
+static inline const char *StoresMap(enum EStores storeType) {
   switch (storeType) {
     case EMAGNIT:
       return "magnit";
@@ -71,7 +72,7 @@ static inline const char * StoresMap(enum EStores storeType) {
 }
 
 // Найти настройку по имени
-static inline enum ESystemSettings FindSetting(const char * settingName) {
+static inline enum ESystemSettings FindSetting(const char *settingName) {
   for (int i = 0; i < ESYSTEMSETTINGSLAST; ++i) {
     if (strcmp(settingName, SystemMap(i)) == 0)
       return i;
@@ -80,12 +81,31 @@ static inline enum ESystemSettings FindSetting(const char * settingName) {
 }
 
 // Найти магазин по имени
-static inline enum EStores FindStore(const char * storeName) {
+static inline enum EStores FindStore(const char *storeName) {
   for (int i = 0; i < ESTORESLAST; ++i) {
     if (strcmp(storeName, StoresMap(i)) == 0)
       return i;
   }
   return ESTORESLAST;
+}
+
+// Маппинг наименований БД
+static inline const char *DbMap(enum EDatabases dbType) {
+  switch (dbType) {
+    case EPOSTGRES:
+      return "postgres";
+    default:
+      return nullptr;
+  }
+}
+
+// Найти БД по имени
+static inline enum EDatabases FindDb(const char *dbName) {
+  for (int i = 0; i < EDATABASELAST; ++i) {
+    if (strcmp(dbName, DbMap(i)) == 0)
+      return i;
+  }
+  return EDATABASELAST;
 }
 
 #endif

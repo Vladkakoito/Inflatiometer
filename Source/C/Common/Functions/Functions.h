@@ -1,3 +1,3 @@
 #pragma once
 
-const char* GetFileName(const char *path);
+const char *GetFileName(const char *path);

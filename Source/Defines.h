@@ -2,9 +2,13 @@
 
 #define PRAGMA_MESSAGE(x) _Pragma(#x)
 #define TODO(msg)         PRAGMA_MESSAGE(message("TODO: " #msg))
-#define LOG_RET(code, msg, ...)                                                                    \
+#define RETURN_LOG(code, msg, ...)                                                                 \
   LOG(msg, ##__VA_ARGS__);                                                                         \
   return code
+
+#define EXIT_LOG(code, msg, ...)                                                                   \
+  LOG(msg, ##__VA_ARGS__);                                                                         \
+  exit(code)
 
 // Парсинг настроек и инициализация логгера -
 // почему под одной крышей ? Спросите вы.
