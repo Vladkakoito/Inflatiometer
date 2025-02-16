@@ -40,6 +40,7 @@ struct TSettingsDatabase {
   char contentDescriptionPath[MAX_FILEPATH];
   char server[MAX_FILEPATH];
   char path[MAX_FILEPATH];
+  char clientPath[MAX_FILEPATH];
   enum EDatabases type;
 };
 

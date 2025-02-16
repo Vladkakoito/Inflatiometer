@@ -7,7 +7,7 @@
 #include <Common/Logger/Logger.h>
 #include <sys/stat.h>
 
-#include <DatabaseManager/Impl/TreeManager.h>
+#include <DatabaseManager/Impl/ContentDescription/NodesWalker.h>
 
 #include <Common/Third-party/Json/cJSON.h>
 

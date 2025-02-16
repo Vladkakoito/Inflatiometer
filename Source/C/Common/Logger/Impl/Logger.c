@@ -1,24 +1,25 @@
-#include <Common/Logger/Logger.h>
-#include <Common/Settings.h>
 #include <Constants.h>
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <stdarg.h>
 
-static FILE * g_logStream;
-static FILE * g_errStream;
+#include <Common/Logger/Logger.h>
+#include <Common/Settings.h>
+
+static FILE *g_logStream;
+static FILE *g_errStream;
 static int g_logLevel = 0;
 static bool g_addFileLine = false;
 static bool g_notAddTs = false;
 static bool g_notAddDt = false;
 static bool g_notStd = false;
 
-// функция открывает файл на запись. 
+// функция открывает файл на запись.
 // добавляет timestamp в начало и datetime в конец имени файла если надо
-static FILE* OpenLogFile(const char* path) {
-  const char* filename = strrchr(path, '/');
+static FILE *OpenLogFile(const char *path) {
+  const char *filename = strrchr(path, '/');
   if (!filename)
     filename = path;
   else
@@ -26,24 +27,23 @@ static FILE* OpenLogFile(const char* path) {
 
   char buffer[TIMESTAMP_LENGTH + MAX_FILEPATH + DATETIME_LENGTH + 2];
   time_t ts = time(nullptr);
-  char* cur = strncpy(buffer, path, strlen(path) - strlen(filename));
+  char *cur = strncpy(buffer, path, strlen(path) - strlen(filename));
 
   if (!g_notAddTs)
     cur += snprintf(cur, TIMESTAMP_LENGTH + 1, "%ld_", ts);
 
-  char* ext = strrchr(filename, '.');
+  char *ext = strrchr(filename, '.');
   if (ext)
     *ext++ = '\0';
 
   cur = strcpy(cur, filename) + strlen(filename);
 
   if (!g_notAddDt) {
-    struct tm * dt = gmtime(&ts);
+    struct tm *dt = gmtime(&ts);
     cur += strftime(cur, DATETIME_LENGTH + 1, "_%F_%T", dt);
   }
 
-  if (ext)
-  {
+  if (ext) {
     *cur++ = '.';
     strcpy(cur, ext);
   }
@@ -51,7 +51,7 @@ static FILE* OpenLogFile(const char* path) {
   return fopen(buffer, "w");
 }
 
-int LoggerInit(struct TSettingsLogger * settings) {
+int LoggerInit(struct TSettingsLogger *settings) {
   g_logStream = settings->notStdout ? stderr : stdout;
   g_errStream = stderr;
 
@@ -64,7 +64,7 @@ int LoggerInit(struct TSettingsLogger * settings) {
   if (settings->errFileName[0] != 0)
     g_errStream = OpenLogFile(settings->errFileName);
 
-  // отключение буферизации для дебага. 
+  // отключение буферизации для дебага.
   // перфоманс ни к чему, а своевременные сообщения очень даже
   // например, для дочернего процесса нужно вручную флашить буфер между fork и exec.
   if (g_errStream != g_logStream || g_errStream == stderr)
@@ -78,20 +78,19 @@ int LoggerInit(struct TSettingsLogger * settings) {
   return 0;
 }
 
-static void Print( const char * msg, FILE * stream, const char * file, int line){
+static void Print(const char *msg, FILE *stream, const char *file, int line) {
   time_t curTime = time(nullptr);
-  struct tm * dt = gmtime(&curTime);
+  struct tm *dt = gmtime(&curTime);
   char timebuf[DATETIME_LENGTH];
   strftime(timebuf, DATETIME_LENGTH, "%F %T", dt);
 
   if (file)
-    fprintf(stream, "[%s] %-*s(%-*d): %s\n", timebuf, MAX_SRC_FILENAME, file, 3, line, msg);
+    fprintf(stream, "[%s] %-*s(%-*d): %s\n", timebuf, MAX_FILENAME, file, 3, line, msg);
   else
     fprintf(stream, "[%s] %s\n", timebuf, msg);
-
 }
 
-void WriteLog(const char *msg,  ...) {
+void WriteLog(const char *msg, ...) {
   if (g_logStream == g_errStream)
     return;
   char buffer[MAX_MESSAGE_LENGTH];
@@ -103,7 +102,7 @@ void WriteLog(const char *msg,  ...) {
   Print(buffer, g_logStream, nullptr, 0);
 }
 
-void WriteDbg(int level, const char *msg, const char* fileName, long line, ...) {
+void WriteDbg(int level, const char *msg, const char *fileName, long line, ...) {
   if (g_logLevel < level || (level == 0 && g_errStream == stderr))
     return;
 
@@ -116,7 +115,7 @@ void WriteDbg(int level, const char *msg, const char* fileName, long line, ...) 
 
   if (g_addFileLine)
     Print(buffer, g_errStream, fileName, line);
-  else 
+  else
     Print(buffer, g_errStream, nullptr, 0);
 }
 

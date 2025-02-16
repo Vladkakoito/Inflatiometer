@@ -12,12 +12,15 @@ message(STATUS "CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")
 set(COPY_FROM "Source/Python" "Resources" "Configs")
 set(COPY_TO "${CMAKE_BINARY_DIR}")
 
-# Каталоги с исходниками
+# Каталоги с исходниками. Что бы не собирать какой-то сервис, достаточно просто убрать тут
 set(CONTROLLER "C/Controller" "Cpp/Controller")
 set(SERVER "C/Server" "Cpp/Server")
 set(DATA_HANDLER "C/DataHandler" "Cpp/DataHandler")
 set(DATA_HANDLER "C/DatabaseManager")
 set(SOURCES_DIRS ${CONTROLLER} ${SERVER} ${DATA_HANDLER})
+
+#Настройки БД менеджера
+set (WITH_POSTGRES_DB ON)
 
 # Компиляторы. При изменении компиляторов, возможно, нужно подкорректировать флаги компиляции.
 set(CMAKE_C_COMPILER "gcc")

@@ -2,11 +2,21 @@ set (THIS_TARGET "CDatabaseManager")
 
 set (SOURCE_FILES 
   "DatabaseManager.c"
-  "Impl/TreeManager.c"
+  "Impl/ContentDescription/Json/NodesWalker.c"
+  "Impl/Manager.c"
 )
+
+if (DEFINED WITH_POSTGRES_DB)
+  set (SOURCE_FILES ${SOURCE_FILES} "Impl/Postgres/Commands.c")
+endif()
+
 set (HEADER_FILES "")
 
 add_executable(${THIS_TARGET} ${SOURCE_FILES} ${HEADER_FILES})
+
+if (DEFINED WITH_POSTGRES_DB)
+  target_compile_definitions(${THIS_TARGET} PRIVATE WITH_POSTGRES_DB)
+endif()
 
 target_link_libraries(${THIS_TARGET} 
   IniParser

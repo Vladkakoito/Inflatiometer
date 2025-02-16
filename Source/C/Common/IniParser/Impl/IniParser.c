@@ -44,6 +44,8 @@ static int SectionDB(struct TSettingsDatabase *settings, const char *name, const
     strcpy(settings->path, value);
   else if (strcmp(name, "type") == 0)
     settings->type = FindDb(value);
+  else if (strcmp(name, "client_path") == 0)
+    strcpy(settings->clientPath, value);
 
   return 0;
 }

@@ -1,11 +1,9 @@
 #include <Defines.h>
 
-#include <stdlib.h>
-
 #include <Common/Logger/Logger.h>
 #include <Common/Settings.h>
 
-#include "DatabaseManager/Impl/TreeManager.h"
+#include <DatabaseManager/Impl/Manager.h>
 
 #include "Common/IniParser/IniParser.h"
 
@@ -37,6 +35,6 @@ int main(int argc, char *argv[]) {
   LOG("Команда: %s", argv[1]);
   if (strcmp(argv[1], "make") == 0) {
     DBG(8, "Команда определена: %s", argv[1]);
-    return
+    return MakeDatabase(&settings.db);
   }
 }
