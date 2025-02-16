@@ -7,6 +7,7 @@
 #include <Common/Logger/Logger.h>
 #include <Common/Settings.h>
 
+#include <Controller/Impl/Database.h>
 #include <Controller/Impl/DoProcess.h>
 
 #include "Common/IniParser/IniParser.h"
@@ -38,37 +39,6 @@ static void PrintConfiguration(const struct TSettings *settings) {
 }
 
 
-int RunDBServer(const struct TSettingsDatabase *settings) {
-  DBG(2, "Запускается сервер БД");
-
-  LOG_FLUSH(); // что бы буфер не попал и в родителя и в потомка
-
-  int pid = fork();
-  if (pid < 0)
-    RETURN_LOG(-14, "Ошибка вызова fork в RunDBServer: %s", strerror(errno));
-
-  // родительский процесс
-  if (pid > 0)
-    return 0;
-
-  switch (settings->type) {
-    case EPOSTGRES:
-      if (settings->path[0] == '\0') // настройки должны быть инициализированы нулями
-        EXIT_LOG(-16, "Ошибка запуска сервера БД: не указан путь до базы данных");
-
-      if (execlp(settings->server, settings->server, "-D", settings->path, nullptr) >= 0)
-        exit(0);
-
-      exit(-16);
-      break;
-
-    default:
-      EXIT_LOG(-15, "Указанный сервер БД(%s) не поддерживается");
-  }
-  exit(-1);
-}
-
-
 int main() {
   // инициализация в консоль сначала. что бы уже можно было пользоваться. потом перенаправится из настроек.
   if (LOG_INIT(nullptr) < 0) {
@@ -91,7 +61,13 @@ int main() {
   processes.parser = settings.parsers.stores[0];
   processes.dataHandler = settings.dataHandlers.names[0];
 
-  int ret = RunDBServer(&settings.db);
+  int ret = RunDBManager(&settings.db);
+  if (ret == 0)
+    atexit(StopDbManager);
+
+  ret = DBCheck();
+  if (ret != 0)
+    return ret;
 
   while (ret == 0 && !g_isStop)
     ret = DoProcess(&processes);

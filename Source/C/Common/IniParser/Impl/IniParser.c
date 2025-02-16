@@ -12,6 +12,7 @@ static const char *kSectionSystem = "System";
 static const char *kSectionParsers = "Parsers";
 static const char *kSectionLogger = "Logger";
 static const char *kSectionDatabase = "Database";
+static const char *kSectionPostgresServer = "PostgresServer";
 
 static int SectionLoggerHandler(struct TSettingsLogger *settings, const char *name,
                                 const char *value) {
@@ -33,19 +34,31 @@ static int SectionLoggerHandler(struct TSettingsLogger *settings, const char *na
   return 0;
 }
 
+static int SectionPostgresServer(struct TSettingsPostgresServer *settings, const char *name,
+                                 const char *value) {
+  if (strcmp(name, "path") == 0)
+    strcpy(settings->path, value);
+  else {
+    static size_t i = 0;
+    strcpy(settings->parameters[i].name, name);
+    strcpy(settings->parameters[i++].value, value);
+  }
+
+  return 0;
+}
+
 static int SectionDB(struct TSettingsDatabase *settings, const char *name, const char *value) {
   if (strcmp(name, "manager") == 0)
     strcpy(settings->manager, value);
   else if (strcmp(name, "content_description") == 0)
     strcpy(settings->contentDescriptionPath, value);
-  else if (strcmp(name, "server") == 0)
-    strcpy(settings->server, value);
   else if (strcmp(name, "path") == 0)
     strcpy(settings->path, value);
   else if (strcmp(name, "type") == 0)
     settings->type = FindDb(value);
-  else if (strcmp(name, "client_path") == 0)
-    strcpy(settings->clientPath, value);
+  else if (strcmp(name, "unix_socket_directories") == 0)
+    strcpy(settings->path, value);
+  ;
 
   return 0;
 }
@@ -75,6 +88,8 @@ static int CommonHandler(void *user, const char *section, const char *name, cons
     SectionLoggerHandler(&settings->logger, name, value);
   else if (strcmp(section, kSectionDatabase) == 0)
     SectionDB(&settings->db, name, value);
+  else if (strcmp(section, kSectionPostgresServer) == 0)
+    SectionPostgresServer(&settings->db.server, name, value);
 
   return 0;
 }

@@ -1,6 +1,5 @@
 #include <Common/Settings.h>
 
-#include <DatabaseManager/Impl/ContentDescription/NodesWalker.h>
 #include <DatabaseManager/Impl/Postgres/Commands.h>
 
 int PostgresMakeCategory(uint64_t categories, const char *name, const char **tags) {

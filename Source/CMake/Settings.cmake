@@ -36,5 +36,5 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Флаги компиляции
 set(CMAKE_C_FLAGS 
- "-Wall -g"
+ "-Wall -g -D_POSIX_C_SOURCE"
 )

@@ -5,6 +5,7 @@ set (THIS_TARGET "CController")
 set (SOURCE_FILES 
   "Controller.c"
   "Impl/DoProcess.c"
+  "Impl/Database.c"
 )
 set (HEADER_FILES "")
 

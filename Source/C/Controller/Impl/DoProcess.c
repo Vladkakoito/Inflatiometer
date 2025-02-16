@@ -27,6 +27,9 @@ static int RunParser(int fd, const char *command) {
     return pid;
   }
 
+  if (dup2(fd, STDOUT_FILENO) != STDOUT_FILENO)
+    EXIT_LOG(-17, "Не удалось назначить стандартный вывод для канала для парсера");
+
   if (execlp(command, GetFileName(command), nullptr) >= 0)
     exit(0);
 
@@ -54,10 +57,11 @@ static int RunDataHandler(int fd, const char *command) {
 
 int DoProcess(struct TProcessesToRun *processes) {
   DBG(2, "Запуск процессов парсеров и обработчиков данных");
-  int fds[2];
 
+  int fds[2];
   if (pipe(fds) < 0)
     RETURN_LOG(-10, "Ошибка создания PIPE при запуске парсера");
+  DBG(9, "PIPE для парсера и обработчика создан");
 
   // вернёт pid дочернего процесса (парсера).
   // ему отдаём один fd для ввода, себе оставляем другой

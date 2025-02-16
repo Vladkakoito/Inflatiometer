@@ -11,6 +11,8 @@ static const char *kIniFile = MY_NAME ".ini";
 static const char *kCommonIniFile = "Common.ini";
 static const char *kCIniFile = "CCommon.ini";
 
+static const char *kCheckCommand = "check";
+
 static void PrintConfiguration(const struct TSettingsDatabase *settings) {
   LOG("\n--------- Конфигурация менеджера БД ---------");
   LOG("\nmanager: %s", settings->path);
@@ -33,8 +35,8 @@ int main(int argc, char *argv[]) {
   }
 
   LOG("Команда: %s", argv[1]);
-  if (strcmp(argv[1], "make") == 0) {
+  if (strcmp(argv[1], kCheckCommand) == 0) {
     DBG(8, "Команда определена: %s", argv[1]);
-    return MakeDatabase(&settings.db);
+    return CheckDatabase(&settings.db);
   }
 }
