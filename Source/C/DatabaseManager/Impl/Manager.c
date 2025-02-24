@@ -7,7 +7,7 @@
 #include "Defines.h"
 
 #ifdef WITH_POSTGRES_DB
-#include <DatabaseManager/Impl/Postgres/Commands.h>
+#include <DatabaseManager/Impl/Postgres/PostgresDB.h>
 #endif
 
 enum EDatabases g_dbType;

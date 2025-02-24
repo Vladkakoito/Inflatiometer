@@ -35,14 +35,20 @@ struct TSettingsSystem {
   char values[ESYSTEMSETTINGSLAST][MAX_SYSTEM_PATH];
 };
 
-struct TPostgresServerParam {
+struct TPostgresParams {
   char name[MAX_DB_PARAM_NAME_LENGTH];
   char value[MAX_DB_PARAM_VALUE_LENGTH];
 };
 
 struct TSettingsPostgresServer {
   char path[MAX_FILEPATH];
-  struct TPostgresServerParam parameters[MAX_DB_PARAMS_COUNT];
+  size_t cnt;
+  struct TPostgresParams parameters[MAX_DB_PARAMS_COUNT];
+};
+
+struct TSettingsPostgresClient {
+  size_t cnt;
+  struct TPostgresParams parameters[MAX_DB_PARAMS_COUNT];
 };
 
 struct TSettingsDatabase {
@@ -51,6 +57,7 @@ struct TSettingsDatabase {
   char path[MAX_FILEPATH];
   enum EDatabases type;
   struct TSettingsPostgresServer server;
+  struct TSettingsPostgresClient client;
 };
 
 struct TSettings {

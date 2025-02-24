@@ -13,6 +13,7 @@ static const char *kSectionParsers = "Parsers";
 static const char *kSectionLogger = "Logger";
 static const char *kSectionDatabase = "Database";
 static const char *kSectionPostgresServer = "PostgresServer";
+static const char *kSectionPostgresClient = "PostgresClient";
 
 static int SectionLoggerHandler(struct TSettingsLogger *settings, const char *name,
                                 const char *value) {
@@ -38,11 +39,17 @@ static int SectionPostgresServer(struct TSettingsPostgresServer *settings, const
                                  const char *value) {
   if (strcmp(name, "path") == 0)
     strcpy(settings->path, value);
-  else {
-    static size_t i = 0;
-    strcpy(settings->parameters[i].name, name);
-    strcpy(settings->parameters[i++].value, value);
-  }
+  else if (strcpy(settings->parameters[settings->cnt].name, name) &&
+           strcpy(settings->parameters[settings->cnt++].value, value))
+    ++settings->cnt;
+  return 0;
+}
+
+static int SectionPostgresClient(struct TSettingsPostgresClient *settings, const char *name,
+                                 const char *value) {
+  if (strcpy(settings->parameters[settings->cnt].name, name) &&
+      strcpy(settings->parameters[settings->cnt++].value, value))
+    ++settings->cnt;
 
   return 0;
 }
@@ -90,6 +97,8 @@ static int CommonHandler(void *user, const char *section, const char *name, cons
     SectionDB(&settings->db, name, value);
   else if (strcmp(section, kSectionPostgresServer) == 0)
     SectionPostgresServer(&settings->db.server, name, value);
+  else if (strcmp(section, kSectionPostgresClient) == 0)
+    SectionPostgresClient(&settings->db.client, name, value);
 
   return 0;
 }

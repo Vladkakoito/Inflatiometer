@@ -22,6 +22,12 @@ set(SOURCES_DIRS ${CONTROLLER} ${SERVER} ${DATA_HANDLER})
 #Настройки БД менеджера
 set (WITH_POSTGRES_DB ON)
 
+#Настройки Postgres
+if (DEFINED WITH_POSTGRES_DB)
+  set(POSTGRES_INCLUDE_DIR "/usr/include/postgresql")
+  set(POSTGRES_LINK_DIR "/usr/lib/x86_64-linux-gnu")
+endif()
+
 # Компиляторы. При изменении компиляторов, возможно, нужно подкорректировать флаги компиляции.
 set(CMAKE_C_COMPILER "gcc")
 set(CMAKE_CXX_COMPILER "clang++")

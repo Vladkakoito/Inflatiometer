@@ -7,7 +7,10 @@ set (SOURCE_FILES
 )
 
 if (DEFINED WITH_POSTGRES_DB)
-  set (SOURCE_FILES ${SOURCE_FILES} "Impl/Postgres/Commands.c")
+  set (SOURCE_FILES ${SOURCE_FILES} 
+    "Impl/Postgres/Commands.c"
+    "Impl/Postgres/Connector.c"
+  )
 endif()
 
 set (HEADER_FILES "")
@@ -16,6 +19,10 @@ add_executable(${THIS_TARGET} ${SOURCE_FILES} ${HEADER_FILES})
 
 if (DEFINED WITH_POSTGRES_DB)
   target_compile_definitions(${THIS_TARGET} PRIVATE WITH_POSTGRES_DB)
+  target_include_directories(${THIS_TARGET} PRIVATE ${POSTGRES_INCLUDE_DIR})
+  target_link_directories(${THIS_TARGET} PRIVATE ${POSTGRES_LINK_DIR})
+  message (STATUS ${POSTGRES_INCLUDE_DIR})
+  message (STATUS ${POSTGRES_LINK_DIR})
 endif()
 
 target_link_libraries(${THIS_TARGET} 
@@ -23,6 +30,7 @@ target_link_libraries(${THIS_TARGET}
   Logger
   Functions
   cjson
+  pq
 ) 
 
 target_include_directories(${THIS_TARGET} PRIVATE 
