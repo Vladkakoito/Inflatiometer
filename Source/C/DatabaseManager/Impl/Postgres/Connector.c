@@ -9,7 +9,6 @@
 
 #include <DatabaseManager/Impl/Postgres/Connector.h>
 
-#include <libpq-fe.h>
 
 static PGconn *g_connection = nullptr;
 static char *g_connectionOptions = nullptr;
@@ -57,6 +56,23 @@ int Connect() {
   return 0;
 }
 
+int GetConnection(PGconn **result) {
+  DBG(9, "Получения объекта соединения");
+  ConnStatusType status;
+  if (g_connection) {
+    status = PQstatus(g_connection);
+    DBG(3, "Соединение активно на данный момент. Статус: %d", status);
+  }
+
+  if (!g_connection || status != CONNECTION_OK) {
+    int ret = Connect();
+    if (ret != 0)
+      return ret;
+  }
+
+  *result = g_connection;
+  return 0;
+}
 
 void Disconnect() {
   DBG(3, "Разрыв соединения с БД Postgres");

@@ -1,10 +1,10 @@
+#include <Defines.h>
+
 #include <Common/Logger/Logger.h>
+#include <Common/Settings.h>
 
 #include <DatabaseManager/Impl/ContentDescription/NodesWalker.h>
 #include <DatabaseManager/Impl/Manager.h>
-
-#include "Common/Settings.h"
-#include "Defines.h"
 
 #ifdef WITH_POSTGRES_DB
 #include <DatabaseManager/Impl/Postgres/PostgresDB.h>
