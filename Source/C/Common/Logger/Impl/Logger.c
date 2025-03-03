@@ -52,7 +52,7 @@ static FILE *OpenLogFile(const char *path) {
 }
 
 int LoggerInit(struct TSettingsLogger *settings) {
-  g_logStream = settings->notStdout ? stderr : stdout;
+  g_logStream = settings && settings->notStdout ? stderr : stdout;
   g_errStream = stderr;
 
   if (!settings)

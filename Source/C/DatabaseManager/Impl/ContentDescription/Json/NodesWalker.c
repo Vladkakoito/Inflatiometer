@@ -21,9 +21,9 @@ static uint64_t g_categories = 0;
 static TProductHandler g_productHandler;
 
 // Наполнить список тегов из ноды
-static int FillArrayTags(const char *resultTags[MAX_TAGS_COUNT], const cJSON *node) {
+static int FillArrayTags(uint64_t *resultTags, const cJSON *node) {
   DBG(10, "Наполнение тегов из ноды");
-  size_t i = 0;
+  int i = 0;
   if (!node)
     return 0;
   if (!cJSON_IsArray(node))
@@ -31,13 +31,13 @@ static int FillArrayTags(const char *resultTags[MAX_TAGS_COUNT], const cJSON *no
 
   cJSON *tag = nullptr;
   cJSON_ArrayForEach(tag, node) {
-    if (!tag || !cJSON_IsString(tag))
-      RETURN_LOG(-49, "Тег ноды в описании продуктов не является строкой");
-    resultTags[i++] = tag->valuestring;
+    if (!tag || !cJSON_IsNumber(tag))
+      RETURN_LOG(-49,
+                 "Тег ноды в описании продуктов не число (Должен указывать на индекс категории)");
+    resultTags[i++] = tag->valueint;
   }
-  resultTags[i] = nullptr;
 
-  return 0;
+  return i;
 }
 
 // Получить данные по продукту и вызвать обработчик
@@ -58,10 +58,10 @@ static int ProcessProduct(size_t n, const struct cJSON *product) {
 
   DBG(9, "Обработка продукта %s, индекс %d", name->valuestring, index->valueint);
 
-  const char *tags[MAX_TAGS_COUNT];
-  int ret = FillArrayTags(tags, product);
-  if (ret == 0)
-    ret = g_productHandler(g_categories, index->valueint, name->valuestring, tags);
+  uint64_t tags[MAX_TAGS_COUNT];
+  int ret = FillArrayTags(&tags[0], product);
+  if (ret >= 0)
+    ret = g_productHandler(g_categories, index->valueint, name->valuestring, tags, ret);
 
   return ret;
 }
@@ -84,10 +84,10 @@ static int ProcessCategory(size_t n, const struct cJSON *category) {
 
   g_categories &= category->valueint;
 
-  const char *tags[MAX_TAGS_COUNT];
-  int ret = FillArrayTags(tags, category);
-  if (ret == 0)
-    ret = g_productHandler(g_categories, -1 /*product*/, name->valuestring, tags);
+  uint64_t tags[MAX_TAGS_COUNT];
+  int ret = FillArrayTags(&tags[0], category);
+  if (ret >= 0)
+    ret = g_productHandler(g_categories, -1 /*product*/, name->valuestring, tags, ret);
 
   return ret;
 }

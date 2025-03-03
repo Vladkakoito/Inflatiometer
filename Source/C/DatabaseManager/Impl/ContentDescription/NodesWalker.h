@@ -11,7 +11,7 @@
     - теги ноды. заканчиваются nullptr-ом
   Освобождать ничего не надо, для сохранения - копируем
 */
-typedef int (*TProductHandler)(uint64_t, int32_t, const char *, const char **);
+typedef int (*TProductHandler)(uint64_t, int32_t, const char *, const uint64_t *, int tagsCnt);
 
 void SetProductHandler(TProductHandler);
 int ProcessAllNodes(const char *);

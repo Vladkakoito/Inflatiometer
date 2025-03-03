@@ -10,6 +10,7 @@ if (DEFINED WITH_POSTGRES_DB)
   set (SOURCE_FILES ${SOURCE_FILES} 
     "Impl/Postgres/Commands.c"
     "Impl/Postgres/Connector.c"
+    "Impl/Postgres/PostgresDB.c"
   )
 endif()
 
