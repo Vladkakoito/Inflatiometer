@@ -1,14 +1,14 @@
 #pragma once
 
-#define PRAGMA_MESSAGE(x) _Pragma(#x)
-#define TODO(msg)         PRAGMA_MESSAGE(message("TODO: " #msg))
-#define RETURN_LOG(code, msg, ...)                                                                 \
-  LOG(msg, ##__VA_ARGS__);                                                                         \
-  return code
+#define PRAGMA_MESSAGE(x)          _Pragma(#x)
+#define TODO(msg)                  PRAGMA_MESSAGE(message("TODO: " #msg))
+#define RETURN_LOG(code, msg, ...) return LOG(msg, ##__VA_ARGS__), code
 
 #define EXIT_LOG(code, msg, ...)                                                                   \
-  LOG(msg, ##__VA_ARGS__);                                                                         \
-  exit(code)
+  {                                                                                                \
+    LOG(msg, ##__VA_ARGS__);                                                                       \
+    exit(code);                                                                                    \
+  }
 
 // Парсинг настроек и инициализация логгера -
 // почему под одной крышей ? Спросите вы.
